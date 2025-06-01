@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Binary Encoder/Decoder</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #00bfff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+      min-height: 100vh;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    textarea {
+      width: 90%;
+      max-width: 600px;
+      height: 150px;
+      background-color: #1e1e1e;
+      color: #00bfff;
+      border: none;
+      padding: 10px;
+      font-size: 14px;
+      resize: none;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-family: monospace;
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    .toggle-label {
+      font-size: 14px;
+      color: #aaa;
+      user-select: none;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #444;
+      transition: .4s;
+      border-radius: 24px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+    button {
+      background-color: #00bfff;
+      color: #121212;
+      border: none;
+      padding: 10px 18px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #009acc;
+    }
+    select {
+      background-color: #1e1e1e;
+      color: #00bfff;
+      border: none;
+      padding: 6px 12px;
+      font-size: 14px;
+      border-radius: 8px;
+      font-family: monospace;
+      cursor: pointer;
+    }
+    a {
+      color: #00bfff;
+      text-decoration: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Binary Encoder/Decoder</h1>
+
+  <label for="input">Input</label>
+  <textarea id="input" placeholder="Enter your text or binary here..."></textarea>
+
+  <div class="controls">
+    <span class="toggle-label">Encode</span>
+    <label class="switch">
+      <input type="checkbox" id="modeToggle" />
+      <span class="slider"></span>
+    </label>
+    <span class="toggle-label">Decode</span>
+
+    <!-- Dropdown tray for encode mode -->
+    <select id="encodeType" title="Choose encoding type">
+      <option value="text">Text</option>
+      <option value="decimal">Decimal Number</option>
+    </select>
+
+    <button onclick="convert()">Convert</button>
+  </div>
+
+  <label for="output">Output</label>
+  <textarea id="output" readonly placeholder="Result will appear here..."></textarea>
+  <button onclick="copyOutput()">Copy Output</button>
+
+  <a href="index.html">← Back to Home</a>
+
+  <script>
+    const modeToggle = document.getElementById("modeToggle");
+    const encodeType = document.getElementById("encodeType");
+
+    // Show/hide dropdown based on encode/decode mode
+    function updateEncodeDropdown() {
+      if (modeToggle.checked) {
+        // Decode mode - hide dropdown
+        encodeType.style.display = "none";
+      } else {
+        // Encode mode - show dropdown
+        encodeType.style.display = "inline-block";
+      }
+    }
+
+    modeToggle.addEventListener("change", () => {
+      updateEncodeDropdown();
+      document.getElementById("input").value = "";
+      document.getElementById("output").value = "";
+    });
+
+    // Initialize on load
+    updateEncodeDropdown();
+
+    // Text to binary (each char to 8-bit binary)
+    function textToBinary(text) {
+      return text.split('').map(char => {
+        return char.charCodeAt(0).toString(2).padStart(8, '0');
+      }).join(' ');
+    }
+
+    // Binary to text
+    function binaryToText(binary) {
+      return binary.trim().split(' ').map(bin => {
+        return String.fromCharCode(parseInt(bin, 2));
+      }).join('');
+    }
+
+    // Decimal number to binary (no spaces, normal number to binary)
+    function decimalToBinary(decimalStr) {
+      if (!/^\d+$/.test(decimalStr)) {
+        throw new Error("Invalid decimal number! Use digits only.");
+      }
+      return parseInt(decimalStr, 10).toString(2);
+    }
+
+    // Convert button handler
+    function convert() {
+      const input = document.getElementById("input").value.trim();
+      const isDecode = modeToggle.checked;
+      let result = "";
+
+      if (!input) {
+        alert("Please enter some input!");
+        return;
+      }
+
+      try {
+        if (isDecode) {
+          // Decode mode: binary to text
+          if (!/^[01\s]+$/.test(input)) {
+            alert("Invalid binary input! Use only 0, 1, and spaces.");
+            return;
+          }
+          result = binaryToText(input);
+        } else {
+          // Encode mode - decide by dropdown
+          const type = encodeType.value;
+          if (type === "text") {
+            result = textToBinary(input);
+          } else if (type === "decimal") {
+            result = decimalToBinary(input);
+          }
+        }
+        document.getElementById("output").value = result;
+      } catch (e) {
+        alert("Conversion failed: " + e.message);
+      }
+    }
+
+    // Copy output to clipboard
+    function copyOutput() {
+      const output = document.getElementById("output");
+      output.select();
+      document.execCommand("copy");
+      alert("Copied to clipboard!");
+    }
+  </script>
+
+</body>
+</html>

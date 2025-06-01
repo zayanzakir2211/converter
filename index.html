@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Hydra Encoding Toolbox</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #00bfff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 30px;
+      color: #80cfff;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: #00bfff;
+      font-size: 16px;
+      text-align: center;
+      padding: 12px;
+      border: 2px solid #00bfff;
+      border-radius: 10px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .menu a:hover {
+      background-color: #00bfff;
+      color: #121212;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: 12px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔐 The Hydra Encoding-Decoding Toolbox</h1>
+  <p>Select an encoding method:</p>
+
+  <div class="menu">
+    <a href="base64.html">Base64 Encoder/Decoder</a>
+    <a href="binary.html">Binary Encoder/Decoder</a>
+    <a href="hex.html">Hex Encoder/Decoder</a>
+    <a href="base32.html">Base32 Encoder/Decoder</a>
+    <a href="morse.html">Morse Encoder/Decoder</a>
+    <a href="deadhydra.html">Dead Hydra Encoder/Decoder</a>
+  </div>
+
+  <footer>
+    Made by Zayan 🧠
+  </footer>
+
+</body>
+</html>
