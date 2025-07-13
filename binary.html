@@ -244,6 +244,12 @@
       document.execCommand("copy");
       alert("Copied to clipboard!");
     }
+    document.getElementById("input").addEventListener("keydown", function (e) {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault(); 
+    convert();
+  }
+});
   </script>
 
 </body>

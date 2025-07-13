@@ -30,9 +30,9 @@
       width: 90%;
       max-width: 600px;
       height: 150px;
-      background: rgba(0, 191, 255, 0.1); /* translucent blue */
-  backdrop-filter: blur(20px); /* glassy blur */
-  -webkit-backdrop-filter: blur(20px); /* Safari support */
+      background: rgba(0, 191, 255, 0.1); 
+  backdrop-filter: blur(20px); 
+  -webkit-backdrop-filter: blur(20px); 
   box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
       color: #00bfff;
       border: none;
@@ -109,9 +109,9 @@
   border: 2px solid rgba(0, 191, 255, 0.4);
   border-radius: 30px;
   transition: background 0.3s, color 0.3s, box-shadow 0.3s;
-  background: rgba(0, 191, 255, 0.1); /* translucent blue */
-  backdrop-filter: blur(10px); /* glassy blur */
-  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  background: rgba(0, 191, 255, 0.1); 
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); 
   box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
     }
 
@@ -184,6 +184,13 @@
       document.execCommand("copy");
       alert("Copied to clipboard!");
     }
+    document.getElementById("input").addEventListener("keydown", function (e) {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    convert();
+  }
+});
+
   </script>
 
 </body>
