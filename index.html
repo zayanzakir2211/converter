@@ -47,20 +47,27 @@
     }
 
     .menu a {
-      text-decoration: none;
-      color: #00bfff;
-      font-size: 16px;
-      text-align: center;
-      padding: 12px;
-      border: 2px solid #00bfff;
-      border-radius: 30px;
-      transition: background 0.3s, color 0.3s;
-    }
+  text-decoration: none;
+  color: #00bfff;
+  font-size: 16px;
+  text-align: center;
+  padding: 12px;
+  border: 2px solid rgba(0, 191, 255, 0.4);
+  border-radius: 30px;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+  background: rgba(0, 191, 255, 0.1);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
+}
+
 
     .menu a:hover {
-      background-color: #00bfff;
-      color: #121212;
-    }
+  background: rgba(0, 191, 255, 0.3);
+  color: #ffffff;
+  box-shadow: 0 6px 40px rgba(0, 191, 255, 0.4);
+}
+
 
     footer {
       position:inherit;
@@ -76,9 +83,9 @@
 
   <div class="menu">
     <a href="base64.html">Base64 Encoder/Decoder</a>
+    <a href="base32.html">Base32 Encoder/Decoder</a>
     <a href="binary.html">Binary Encoder/Decoder</a>
     <a href="hex.html">Hex Encoder/Decoder</a>
-    <a href="base32.html">Base32 Encoder/Decoder</a>
     <a href="morse.html">Morse Encoder/Decoder</a>
     <a href="deadhydra.html">Dead Hydra Encoder/Decoder</a>
     <a href="sha256.html">SHA-256 Hash Generator</a>
