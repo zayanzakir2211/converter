@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Secure Generator</title>
+  <title>Hydra Password Generator</title>
   <style>
     body {
       background-color: #121212;
@@ -70,7 +70,7 @@
   </style>
 </head>
 <body>
-  <h1>⚡ Secure Password Generator</h1>
+  <h1>⚡ Hydra Password Generator</h1>
   <div class="buttons">
     <button onclick="generatePassword()">Generate Password</button>
   </div>
@@ -134,8 +134,7 @@
       const passwordField = document.getElementById('password');
       passwordField.select();
       passwordField.setSelectionRange(0, 99999); // For mobile devices
-      document.execCommand('copy');
-      alert('Password copied to clipboard!');
+      document.execCommand('copy')
     }
   </script>
 </body>
