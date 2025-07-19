@@ -41,6 +41,15 @@
       resize: none;
       border-radius: 25px;
       margin-bottom: 10px;
+      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s;
+
+    }
+
+textarea:hover {
+      background: linear-gradient(145deg, #0ff3, #f0f3);
+   backdrop-filter: blur(20px); /* glassy blur */
+  -webkit-backdrop-filter: blur(20px); /* Safari support */
+  box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
     }
 
     .controls {
@@ -61,8 +70,13 @@
       align-items: center;
       padding: 5px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s;
+
       overflow: hidden;
+    }
+     .toggle:hover {
+      background: linear-gradient(145deg, #0ff3, #f0f3);
+  box-shadow: 0 6px 40px rgba(0, 191, 255, 0.4);
     }
 
     .knob {
@@ -79,8 +93,13 @@
       color: white;
       font-size: 18px;
       font-weight: bold;
-      transition: left 0.3s ease, background 0.3s ease, color 0.3s ease;
+      transition: left 0.3s ease, background 0.3s ease, color 0.3s ease, box-shadow 0.3s;
       backdrop-filter: blur(6px);
+    }
+
+    .knob:hover {
+      background: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 6px 40px rgb(120, 221, 255);
     }
 
     .toggle.on .knob {
