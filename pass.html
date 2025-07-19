@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hydra Password Generator</title>
+  <title>Hydra Password Generator (Secure)</title>
   <style>
     body {
       background-color: #121212;
@@ -39,29 +39,52 @@
       text-align: center;
       margin-bottom: 20px;
     }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+      width: 90%;
+      max-width: 400px;
+    }
     .buttons {
       display: flex;
       gap: 10px;
-      margin-bottom: 20px;
+      justify-content: center;
     }
-    button {
-       text-decoration: none;
-  color: #00bfff;
-  font-size: 16px;
-  text-align: center;
-  padding: 12px;
-  border: 2px solid rgba(0, 191, 255, 0.4);
-  border-radius: 30px;
-  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
-  background: rgba(0, 191, 255, 0.1);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
+    button, select, input {
+      text-decoration: none;
+      color: #00bfff;
+      font-size: 16px;
+      text-align: center;
+      padding: 12px;
+      border: 2px solid rgba(0, 191, 255, 0.4);
+      border-radius: 30px;
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+      background: rgba(0, 191, 255, 0.1);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
     }
     button:hover {
       background: rgba(0, 191, 255, 0.3);
       color: #ffffff;
       box-shadow: 0 6px 40px rgba(0, 191, 255, 0.4);
+    }
+    input[type="range"] {
+      width: 100%;
+      padding: 0;
+    }
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
     a {
       color: #00bfff;
@@ -72,71 +95,177 @@
 </head>
 <body>
   <h1>⚡ Hydra Password Generator</h1>
-  <div class="buttons">
-    <button onclick="generatePassword()">Generate Password</button>
+  
+  <div class="controls">
+    <div class="checkbox-group">
+      <label class="checkbox-label">
+        <input type="checkbox" id="uppercase" checked> Uppercase (A-Z)
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="lowercase" checked> Lowercase (a-z)
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="numbers" checked> Numbers (0-9)
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="symbols" checked> Symbols (!@#$)
+      </label>
+    </div>
+    
+    <label for="length">Length: <span id="lengthValue">16</span></label>
+    <input type="range" id="length" min="8" max="32" value="16">
   </div>
-  <input id="password" readonly placeholder="Your password appears here" />
+  
+  
+  <input id="password" readonly placeholder="Your secure password appears here" />
+  
   <div class="buttons">
-<button onclick="copyPassword()">Copy Password</button>
-</div>
-<a href="index.html">← Back to Home</a>
-
-  <script src="https://cdn.jsdelivr.net/npm/js-sha3@0.9.2/build/sha3.min.js"></script>
+    <button onclick="copyPassword()">Copy Password</button>
+    <button onclick="regeneratePassword()">Regenerate</button>
+  </div>
+  
+  <div id="strengthMeter"></div>
+  
+  <a href="index.html">← Back to Home</a>
 
   <script>
-    function hexToBytes(hex) {
-      const bytes = new Uint8Array(hex.length / 2);
-      for (let i = 0; i < bytes.length; i++) {
-        bytes[i] = parseInt(hex.substr(i * 2, 2), 16);
-      }
-      return bytes;
-    }
+    // Configuration
+    const CHARACTER_SETS = {
+      uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      lowercase: 'abcdefghijklmnopqrstuvwxyz',
+      numbers: '0123456789',
+      symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
+    };
 
-    function bytesToBase64(bytes) {
-      let binary = '';
-      bytes.forEach((b) => binary += String.fromCharCode(b));
-      return btoa(binary);
-    }
-
+    // Generate cryptographically secure password
     function generatePassword() {
-      const userAgent = navigator.userAgent;
-      const now = new Date();
-
-      const timeStr = now.toLocaleTimeString('en-US');
-      const dateStr = now.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
-      const fullTime = `${timeStr} ${dateStr}`;
-
-      const baseSeed = userAgent + fullTime;
-
-      let sample = '';
-      for (let i = 0; i < 8; i++) {
-        sample += baseSeed[Math.floor(Math.random() * baseSeed.length)];
+      const length = parseInt(document.getElementById('length').value);
+      const selectedSets = getSelectedCharacterSets();
+      
+      if (selectedSets.length === 0) {
+        alert('Please select at least one character set!');
+        return;
       }
 
-      const hashHex = sha3_512(sample);
-      const hashBytes = hexToBytes(hashHex);
-      const base64Hash = bytesToBase64(hashBytes);
+      try {
+        // Generate secure random bytes
+        const randomBytes = new Uint8Array(length * 2);
+        crypto.getRandomValues(randomBytes);
+        
+        // Build character pool from selected sets
+        let charPool = '';
+        let guaranteedChars = '';
+        
+        selectedSets.forEach(set => {
+          charPool += CHARACTER_SETS[set];
+          // Ensure at least one character from each selected set
+          guaranteedChars += CHARACTER_SETS[set][randomBytes[selectedSets.indexOf(set)] % CHARACTER_SETS[set].length];
+        });
 
-      const seconds = now.getSeconds();
-      let length = 8;
-      if (seconds >= 13 && seconds <= 24) length = 9;
-      else if (seconds >= 25 && seconds <= 36) length = 10;
-      else if (seconds >= 37 && seconds <= 48) length = 11;
-      else if (seconds >= 49) length = 12;
-
-      const finalPassword = (seconds % 2 === 0)
-        ? base64Hash.substring(0, length)
-        : base64Hash.substring(base64Hash.length - length);
-
-      document.getElementById('password').value = finalPassword;
+        // Generate password
+        let password = '';
+        for (let i = 0; i < length - selectedSets.length; i++) {
+          password += charPool[randomBytes[i + selectedSets.length] % charPool.length];
+        }
+        
+        // Shuffle guaranteed chars into the password
+        password = shuffleString(password + guaranteedChars);
+        
+        document.getElementById('password').value = password;
+        updateStrengthMeter(password);
+      } catch (e) {
+        alert('Error generating password: ' + e.message);
+        console.error(e);
+      }
     }
 
+    // Helper functions
+    function getSelectedCharacterSets() {
+      const sets = [];
+      if (document.getElementById('uppercase').checked) sets.push('uppercase');
+      if (document.getElementById('lowercase').checked) sets.push('lowercase');
+      if (document.getElementById('numbers').checked) sets.push('numbers');
+      if (document.getElementById('symbols').checked) sets.push('symbols');
+      return sets;
+    }
+
+    function shuffleString(str) {
+      const array = str.split('');
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296 * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array.join('');
+    }
+
+    function updateStrengthMeter(password) {
+      const meter = document.getElementById('strengthMeter');
+      if (!password) {
+        meter.innerHTML = '';
+        return;
+      }
+
+      // Simple strength calculation (can be enhanced with zxcvbn library)
+      let strength = 0;
+      if (password.length >= 12) strength += 1;
+      if (password.length >= 16) strength += 1;
+      if (/[A-Z]/.test(password)) strength += 1;
+      if (/[a-z]/.test(password)) strength += 1;
+      if (/[0-9]/.test(password)) strength += 1;
+      if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+
+      let strengthText = '';
+      let strengthColor = '';
+      
+      if (strength >= 5) {
+        strengthText = 'Very Strong';
+        strengthColor = '#00ff00';
+      } else if (strength >= 4) {
+        strengthText = 'Strong';
+        strengthColor = '#7cfc00';
+      } else if (strength >= 3) {
+        strengthText = 'Good';
+        strengthColor = '#ffd700';
+      } else if (strength >= 2) {
+        strengthText = 'Weak';
+        strengthColor = '#ff6347';
+      } else {
+        strengthText = 'Very Weak';
+        strengthColor = '#ff0000';
+      }
+
+      meter.innerHTML = `Password Strength: <span style="color:${strengthColor}">${strengthText}</span>`;
+    }
+
+    // UI Functions
     function copyPassword() {
       const passwordField = document.getElementById('password');
       passwordField.select();
-      passwordField.setSelectionRange(0, 99999); // For mobile devices
-      document.execCommand('copy')
+      passwordField.setSelectionRange(0, 99999);
+      document.execCommand('copy');
+      
+      // Visual feedback
+      const copyBtn = document.querySelector('button[onclick="copyPassword()"]');
+      const originalText = copyBtn.textContent;
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => {
+        copyBtn.textContent = originalText;
+      }, 2000);
     }
+
+    function regeneratePassword() {
+      generatePassword();
+    }
+
+    // Event Listeners
+    document.getElementById('length').addEventListener('input', function() {
+      document.getElementById('lengthValue').textContent = this.value;
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      generatePassword();
+    });
   </script>
 </body>
 </html>
