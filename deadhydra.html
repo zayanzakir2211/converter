@@ -3,23 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Dead Hydra Encoder/Decoder</title>
   <style>
     body {
-     background-color: #121212;
-  color: #00bfff;
-  font-family: 'Segoe UI', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  padding: 20px;
-  background-image: url(assets/1.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+      background-color: #121212;
+      color: #00bfff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+      background-image: url(assets/1.png);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
     }
 
     h1 {
@@ -30,10 +29,10 @@
       width: 90%;
       max-width: 600px;
       height: 150px;
-       background: rgba(0, 191, 255, 0.1); /* translucent blue */
-  backdrop-filter: blur(20px); /* glassy blur */
-  -webkit-backdrop-filter: blur(20px); /* Safari support */
-  box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
+      background: rgba(0, 191, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
       color: #00bfff;
       border: none;
       padding: 10px;
@@ -50,75 +49,62 @@
       margin-bottom: 15px;
     }
 
-    .toggle-label {
-      font-size: 14px;
-      color: #aaa;
-    }
-
-    .switch {
+    .toggle {
+      width: 90px;
+      height: 30px;
+      background: linear-gradient(145deg, #0ff3, #f0f3);
+      border-radius: 40px;
       position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 24px;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
+      box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
+      display: flex;
+      align-items: center;
+      padding: 5px;
       cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #444;
-      transition: .4s;
-      border-radius: 24px;
+      transition: background 0.3s ease;
+      overflow: hidden;
     }
 
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 18px;
-      width: 18px;
-      left: 4px;
-      bottom: 3px;
-      background-color: white;
-      transition: .4s;
+    .knob {
+      width: 30px;
+      height: 30px;
+      background: rgba(0, 0, 0, 0.85);
       border-radius: 50%;
+      position: absolute;
+      left: 5px;
+      box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      transition: left 0.3s ease;
+      backdrop-filter: blur(6px);
     }
 
-    input:checked + .slider {
-      background-color: #2196F3;
-    }
-
-    input:checked + .slider:before {
-      transform: translateX(26px);
+    .toggle.on .knob {
+      left: 65px;
     }
 
     button {
-     text-decoration: none;
-  color: #00bfff;
-  font-size: 16px;
-  text-align: center;
-  padding: 12px;
-  border: 2px solid rgba(0, 191, 255, 0.4);
-  border-radius: 30px;
-  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
-  background: rgba(0, 191, 255, 0.1); /* translucent blue */
-  backdrop-filter: blur(10px); /* glassy blur */
-  -webkit-backdrop-filter: blur(10px); /* Safari support */
-  box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
+      text-decoration: none;
+      color: #00bfff;
+      font-size: 16px;
+      text-align: center;
+      padding: 12px;
+      border: 2px solid rgba(0, 191, 255, 0.4);
+      border-radius: 30px;
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+      background: rgba(0, 191, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
     }
 
     button:hover {
-       background: rgba(0, 191, 255, 0.3);
-  color: #ffffff;
-  box-shadow: 0 6px 40px rgba(0, 191, 255, 0.4);
+      background: rgba(0, 191, 255, 0.3);
+      color: #ffffff;
+      box-shadow: 0 6px 40px rgba(0, 191, 255, 0.4);
     }
 
     a {
@@ -129,20 +115,17 @@
   </style>
 </head>
 <body>
-
   <h1>Dead Hydra Encoder/Decoder</h1>
 
   <label for="input">Input</label>
   <textarea id="input" placeholder="Enter your text here..."></textarea>
 
   <div class="controls">
-    <span class="toggle-label">Encode</span>
-    <label class="switch">
-      <input type="checkbox" id="modeToggle">
-      <span class="slider"></span>
-    </label>
-    <span class="toggle-label">Decode</span>
-
+    <span id="modeLabel" style="color: #aaa; font-size: 14px;">Encode</span>
+    <div id="neonToggle" class="toggle">
+      <div class="knob"></div>
+    </div>
+    <span style="color: #aaa; font-size: 14px;">Decode</span>
     <button onclick="convert()">Convert</button>
   </div>
 
@@ -153,6 +136,43 @@
   <a href="index.html">← Back to Home</a>
 
   <script>
+    let isDecode = false;
+
+    document.getElementById("neonToggle").addEventListener("click", () => {
+      const toggle = document.getElementById("neonToggle");
+      toggle.classList.toggle("on");
+      isDecode = toggle.classList.contains("on");
+    });
+
+    function convert() {
+      const input = document.getElementById("input").value.trim();
+      let result = "";
+
+      try {
+        if (isDecode) {
+          result = decode(input);
+        } else {
+          result = encode(input);
+        }
+        document.getElementById("output").value = result;
+      } catch (e) {
+        alert("Conversion failed: " + e.message);
+      }
+    }
+
+    function copyOutput() {
+      const output = document.getElementById("output");
+      output.select();
+      document.execCommand("copy");
+    }
+
+    document.getElementById("input").addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        convert();
+      }
+    });
+
     const symbolMap = {
       '!': '27', '.': '28', '?': '29', ',': '30', ';': '31', ':': '32',
       '@': '33', '#': '34', '$': '35', '%': '36', '^': '37', '&': '38',
@@ -176,12 +196,9 @@
         if (char === ' ') {
           result += '00';
         } else if (char >= 'a' && char <= 'z') {
-          const code = (char.charCodeAt(0) - 96).toString().padStart(2, '0');
-          result += code;
+          result += (char.charCodeAt(0) - 96).toString().padStart(2, '0');
         } else if (char >= 'A' && char <= 'Z') {
-          // Uppercase A-Z: encode as 70 to 95, no dot
-          const code = (char.charCodeAt(0) - 65 + 70).toString().padStart(2, '0');
-          result += code;
+          result += (char.charCodeAt(0) - 65 + 70).toString().padStart(2, '0');
         } else if (symbolMap[char]) {
           result += symbolMap[char];
         } else if (char >= '0' && char <= '9') {
@@ -194,77 +211,31 @@
 
     function decode(str) {
       let result = '';
-      let i = 0;
-      while (i < str.length) {
+      for (let i = 0; i < str.length; i += 2) {
         let code = str.substr(i, 2);
-
         if (code === '00') {
           result += ' ';
-          i += 2;
-          continue;
-        }
-
-        if (reverseSymbolMap[code]) {
+        } else if (reverseSymbolMap[code]) {
           result += reverseSymbolMap[code];
-          i += 2;
-          continue;
-        }
-
-        if (digitMap[code]) {
+        } else if (digitMap[code]) {
           result += digitMap[code];
-          i += 2;
-          continue;
-        }
-
-        const n = parseInt(code);
-        if (!isNaN(n)) {
-          if (n >= 1 && n <= 26) {
-            // lowercase letters
-            result += String.fromCharCode(n + 96);
-            i += 2;
-          } else if (n >= 70 && n <= 95) {
-            // uppercase letters
-            result += String.fromCharCode(n - 70 + 65);
-            i += 2;
-          } else {
-            // unknown code
-            result += '?';
-            i += 2;
-          }
         } else {
-          result += '?';
-          i += 2;
+          let n = parseInt(code);
+          if (!isNaN(n)) {
+            if (n >= 1 && n <= 26) {
+              result += String.fromCharCode(n + 96);
+            } else if (n >= 70 && n <= 95) {
+              result += String.fromCharCode(n - 70 + 65);
+            } else {
+              result += '?';
+            }
+          } else {
+            result += '?';
+          }
         }
       }
       return result;
     }
-
-    function convert() {
-      const input = document.getElementById("input").value.trim();
-      const isDecode = document.getElementById("modeToggle").checked;
-      let result = "";
-
-      try {
-        result = isDecode ? decode(input) : encode(input);
-        document.getElementById("output").value = result;
-      } catch (e) {
-        alert("Conversion failed: " + e.message);
-      }
-    }
-
-    function copyOutput() {
-      const output = document.getElementById("output");
-      output.select();
-      document.execCommand("copy");
-    }
-
-    document.getElementById("input").addEventListener("keydown", function (e) {
-  if (e.key === "Enter" && !e.shiftKey) {
-    e.preventDefault(); 
-    convert();
-  }
-});
   </script>
-
 </body>
 </html>

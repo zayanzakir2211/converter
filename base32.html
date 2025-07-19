@@ -50,54 +50,75 @@
       margin-bottom: 15px;
     }
 
-    .toggle-label {
-      font-size: 14px;
-      color: #aaa;
-    }
-
-    .switch {
+    .toggle {
+      width: 90px;
+      height: 30px;
+      background: linear-gradient(145deg, #0ff3, #f0f3);
+      border-radius: 40px;
       position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 24px;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
+      box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
+      display: flex;
+      align-items: center;
+      padding: 5px;
       cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #444;
-      transition: .4s;
-      border-radius: 24px;
+      transition: background 0.3s ease;
+      overflow: hidden;
     }
 
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 18px;
-      width: 18px;
-      left: 4px;
-      bottom: 3px;
-      background-color: white;
-      transition: .4s;
+    .knob {
+      width: 30px;
+      height: 30px;
+      background: rgba(0, 0, 0, 0.85);
       border-radius: 50%;
+      position: absolute;
+      left: 5px;
+      box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      transition: left 0.3s ease, background 0.3s ease, color 0.3s ease;
+      backdrop-filter: blur(6px);
     }
 
-    input:checked + .slider {
-      background-color: #2196F3;
+    .toggle.on .knob {
+      left: 65px;
     }
 
-    input:checked + .slider:before {
-      transform: translateX(26px);
+    .arrow-left,
+    .arrow-right {
+      position: absolute;
+      font-size: 14px;
+      color: white;
+      opacity: 0.6;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .arrow-left {
+      left: 15px;
+    }
+
+    .arrow-right {
+      right: 15px;
+    }
+
+    .toggle.on .arrow-left {
+      opacity: 0;
+    }
+
+    .toggle.on .arrow-right {
+      opacity: 1;
+    }
+
+    .toggle:not(.on) .arrow-left {
+      opacity: 1;
+    }
+
+    .toggle:not(.on) .arrow-right {
+      opacity: 0;
     }
 
     button {
@@ -136,15 +157,15 @@
   <textarea id="input" placeholder="Enter your text or base32 here..."></textarea>
 
   <div class="controls">
-    <span class="toggle-label">Encode</span>
-    <label class="switch">
-      <input type="checkbox" id="modeToggle">
-      <span class="slider"></span>
-    </label>
-    <span class="toggle-label">Decode</span>
-
-    <button onclick="convert()">Convert</button>
+  <span id="modeLabel" style="color: #aaa; font-size: 14px;">Encode</span>
+  <div id="neonToggle" class="toggle">
+    <div class="arrow-left">  </div>
+    <div class="arrow-right">  </div>
+    <div class="knob">  </div>
   </div>
+  <span style="color: #aaa; font-size: 14px;">Decode</span>
+  <button onclick="convert()">Convert</button>
+</div>
 
   <label for="output">Output</label>
   <textarea id="output" readonly placeholder="Result will appear here..."></textarea>
@@ -153,24 +174,34 @@
   <a href="index.html">← Back to Home</a>
 
   <script>
-    function convert() {
-      const input = document.getElementById("input").value.trim();
-      const isDecode = document.getElementById("modeToggle").checked;
-      let result = "";
+    let isDecode = false;
 
-      try {
-        if (isDecode) {
-          const base32Decoded = atob(base32ToBase64(input));
-          result = decodeURIComponent(escape(base32Decoded));
-        } else {
-          const utf8 = unescape(encodeURIComponent(input));
-          result = base64ToBase32(btoa(utf8));
-        }
-        document.getElementById("output").value = result;
-      } catch (e) {
-        alert("Conversion failed: " + e.message);
-      }
+    const toggle = document.getElementById('neonToggle');
+    const knob = toggle.querySelector('.knob');
+
+    toggle.addEventListener('click', () => {
+      toggle.classList.toggle('on');
+      isDecode = toggle.classList.contains('on');
+      knob.textContent = isDecode ? '' : '';
+    });
+    function convert() {
+  const input = document.getElementById("input").value.trim();
+  let result = "";
+
+  try {
+    if (isDecode) {
+      const base32Decoded = atob(base32ToBase64(input));
+      result = decodeURIComponent(escape(base32Decoded));
+    } else {
+      const utf8 = unescape(encodeURIComponent(input));
+      result = base64ToBase32(btoa(utf8));
     }
+    document.getElementById("output").value = result;
+  } catch (e) {
+    alert("Conversion failed: " + e.message);
+  }
+}
+
 
     // Base32 helper functions
     const base32chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
