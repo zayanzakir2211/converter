@@ -160,9 +160,9 @@
   <div class="controls">
   <span id="modeLabel" style="color: #aaa; font-size: 14px;">Encode</span>
   <div id="neonToggle" class="toggle">
-    <div class="arrow-left">⬅</div>
-    <div class="arrow-right">➡</div>
-    <div class="knob">⬅</div>
+    <div class="arrow-left"> <--- </div>
+    <div class="arrow-right"> ---> </div>
+    <div class="knob"> <--- </div>
   </div>
   <span style="color: #aaa; font-size: 14px;">Decode</span>
   <button onclick="convert()">Convert</button>
@@ -184,7 +184,7 @@
     toggle.addEventListener('click', () => {
       toggle.classList.toggle('on');
       isDecode = toggle.classList.contains('on');
-      knob.textContent = isDecode ? '➡' : '⬅';
+      knob.textContent = isDecode ? '--->' : '<---';
     });
 
     function textToHex(str) {
