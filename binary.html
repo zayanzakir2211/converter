@@ -139,7 +139,10 @@
   box-shadow: 0 6px 40px rgba(0, 191, 255, 0.4);
     }
     select {
-      background-color: #1e1e1e;
+      background: rgba(0, 191, 255, 0.1); /* translucent blue */
+  backdrop-filter: blur(20px); /* glassy blur */
+  -webkit-backdrop-filter: blur(20px); /* Safari support */
+  box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
       color: #00bfff;
       border: none;
       padding: 6px 12px;
@@ -186,113 +189,100 @@
   <a href="index.html">← Back to Home</a>
 
   <script>
-    let isDecode = false;
+  let isDecode = false;
 
-    const toggle = document.getElementById('neonToggle');
-    const knob = toggle.querySelector('.knob');
+  const toggle = document.getElementById('neonToggle');
+  const knob = toggle.querySelector('.knob');
+  const encodeType = document.getElementById("encodeType");
 
-    toggle.addEventListener('click', () => {
-      toggle.classList.toggle('on');
-      isDecode = toggle.classList.contains('on');
-      knob.textContent = isDecode ? '' : '';
-    });
-    const modeToggle = document.getElementById("modeToggle");
-    const encodeType = document.getElementById("encodeType");
+  // Toggle click handler
+  toggle.addEventListener('click', () => {
+    toggle.classList.toggle('on');
+    isDecode = toggle.classList.contains('on');
+    knob.textContent = isDecode ? '' : '';
+    updateEncodeDropdown(); // Show/hide dropdown based on mode
+    document.getElementById("input").value = "";
+    document.getElementById("output").value = "";
+  });
 
-    // Show/hide dropdown based on encode/decode mode
-    function updateEncodeDropdown() {
-      if (modeToggle.checked) {
-        // Decode mode - hide dropdown
-        encodeType.style.display = "none";
-      } else {
-        // Encode mode - show dropdown
-        encodeType.style.display = "inline-block";
-      }
-    }
-
-    modeToggle.addEventListener("change", () => {
-      updateEncodeDropdown();
-      document.getElementById("input").value = "";
-      document.getElementById("output").value = "";
-    });
-
-    // Initialize on load
-    updateEncodeDropdown();
-
-    // Text to binary (each char to 8-bit binary)
-    function textToBinary(text) {
-      return text.split('').map(char => {
-        return char.charCodeAt(0).toString(2).padStart(8, '0');
-      }).join(' ');
-    }
-
-    // Binary to text
-    function binaryToText(binary) {
-      return binary.trim().split(' ').map(bin => {
-        return String.fromCharCode(parseInt(bin, 2));
-      }).join('');
-    }
-
-    // Decimal number to binary (no spaces, normal number to binary)
-    function decimalToBinary(decimalStr) {
-      if (!/^\d+$/.test(decimalStr)) {
-        throw new Error("Invalid decimal number! Use digits only.");
-      }
-      return parseInt(decimalStr, 10).toString(2);
-    }
-
-    // Convert button handler
-    function convert() {
-  const input = document.getElementById("input").value.trim();
-  let result = "";
-
-  try {
+  // Show/hide encode type dropdown
+  function updateEncodeDropdown() {
     if (isDecode) {
-      result = atob(input);
+      encodeType.style.display = "none";
     } else {
-      result = btoa(input);
+      encodeType.style.display = "inline-block";
     }
-    document.getElementById("output").value = result;
-  } catch (e) {
-    alert("Conversion failed: " + e.message);
   }
 
-      try {
-        if (isDecode) {
-          // Decode mode: binary to text
-          if (!/^[01\s]+$/.test(input)) {
-            alert("Invalid binary input! Use only 0, 1, and spaces.");
-            return;
-          }
-          result = binaryToText(input);
-        } else {
-          // Encode mode - decide by dropdown
-          const type = encodeType.value;
-          if (type === "text") {
-            result = textToBinary(input);
-          } else if (type === "decimal") {
-            result = decimalToBinary(input);
-          }
+  // Convert input
+  function convert() {
+    const input = document.getElementById("input").value.trim();
+    let result = "";
+
+    try {
+      if (isDecode) {
+        // Decode mode: binary to text
+        if (!/^[01\s]+$/.test(input)) {
+          alert("Invalid binary input! Use only 0, 1, and spaces.");
+          return;
         }
-        document.getElementById("output").value = result;
-      } catch (e) {
-        alert("Conversion failed: " + e.message);
+        result = binaryToText(input);
+      } else {
+        // Encode mode: decide type
+        const type = encodeType.value;
+        if (type === "text") {
+          result = textToBinary(input);
+        } else if (type === "decimal") {
+          result = decimalToBinary(input);
+        }
       }
+      document.getElementById("output").value = result;
+    } catch (e) {
+      alert("Conversion failed: " + e.message);
     }
-
-    // Copy output to clipboard
-    function copyOutput() {
-      const output = document.getElementById("output");
-      output.select();
-      document.execCommand("copy");
-    }
-    document.getElementById("input").addEventListener("keydown", function (e) {
-  if (e.key === "Enter" && !e.shiftKey) {
-    e.preventDefault(); 
-    convert();
   }
-});
-  </script>
+
+  // Text to binary
+  function textToBinary(text) {
+    return text.split('').map(char => {
+      return char.charCodeAt(0).toString(2).padStart(8, '0');
+    }).join(' ');
+  }
+
+  // Binary to text
+  function binaryToText(binary) {
+    return binary.trim().split(' ').map(bin => {
+      return String.fromCharCode(parseInt(bin, 2));
+    }).join('');
+  }
+
+  // Decimal to binary
+  function decimalToBinary(decimalStr) {
+    if (!/^\d+$/.test(decimalStr)) {
+      throw new Error("Invalid decimal number! Use digits only.");
+    }
+    return parseInt(decimalStr, 10).toString(2);
+  }
+
+  // Copy output to clipboard
+  function copyOutput() {
+    const output = document.getElementById("output");
+    output.select();
+    document.execCommand("copy");
+  }
+
+  // Press Enter to convert
+  document.getElementById("input").addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      convert();
+    }
+  });
+
+  // Initialize dropdown visibility
+  updateEncodeDropdown();
+</script>
+
 
 </body>
 </html>
