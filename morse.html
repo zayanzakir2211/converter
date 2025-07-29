@@ -212,40 +212,82 @@
     convert();
   }
 });
-const canvas = document.getElementById('stars');
+
+    // Starfield with guaranteed working mouse hover effect
+    const canvas = document.getElementById('stars');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    let stars = [];
-    for (let i = 0; i < 100; i++) {
+    let mouse = { x: canvas.width/2, y: canvas.height/2 }; // Initialize mouse position
+
+    // Track mouse movement
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // Create stars
+    const stars = [];
+    const starCount = 120;
+    
+    for (let i = 0; i < starCount; i++) {
       stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        r: Math.random() * 1.5,
-        d: Math.random() * 1
+        r: Math.random() * 1.5 + 0.5,
+        vx: Math.random() * 0.2 - 0.1, // Random horizontal drift
+        vy: Math.random() * 0.1 + 0.1  // Slow falling speed
       });
-    }
-
-    function drawStars() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#00ffff";
-      stars.forEach(s => {
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fill();
-      });
-      updateStars();
     }
 
     function updateStars() {
-      stars.forEach(s => {
-        s.y += s.d;
-        if (s.y > canvas.height) s.y = 0;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      stars.forEach(star => {
+        // Calculate distance to mouse
+        const dx = mouse.x - star.x;
+        const dy = mouse.y - star.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        // Push star away from mouse
+        if (distance < 100) {
+          const force = (100 - distance) / 100;
+          star.vx = -dx * 0.01 * force;
+          star.vy = -dy * 0.01 * force;
+        }
+        
+        // Update position
+        star.x += star.vx;
+        star.y += star.vy;
+        
+        // Reset if out of bounds
+        if (star.x < 0 || star.x > canvas.width || star.y > canvas.height) {
+          star.x = Math.random() * canvas.width;
+          star.y = -10;
+          star.vx = Math.random() * 0.2 - 0.1;
+          star.vy = Math.random() * 0.1 + 0.1;
+        }
+        
+        // Draw star with shadow
+        ctx.beginPath();
+        ctx.shadowColor = "rgba(0, 191, 255, 0.7)";
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = "#00ffff";
+        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+        ctx.fill();
       });
+      
+      requestAnimationFrame(updateStars);
     }
 
-    setInterval(drawStars, 60);
+    updateStars(); // Start animation
   </script>
 
 </body>
