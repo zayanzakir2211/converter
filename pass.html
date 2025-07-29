@@ -94,9 +94,17 @@
       text-decoration: none;
       margin-top: 20px;
     }
+     #stars {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
   </style>
 </head>
 <body>
+   <canvas id="stars"></canvas>
   <h1>⚡ Hydra Password Generator</h1>
   
   <div class="controls">
@@ -269,6 +277,40 @@
     document.addEventListener('DOMContentLoaded', function() {
       generatePassword();
     });
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let stars = [];
+    for (let i = 0; i < 100; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.5,
+        d: Math.random() * 1
+      });
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#00ffff";
+      stars.forEach(s => {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      updateStars();
+    }
+
+    function updateStars() {
+      stars.forEach(s => {
+        s.y += s.d;
+        if (s.y > canvas.height) s.y = 0;
+      });
+    }
+
+    setInterval(drawStars, 60);
   </script>
 </body>
 </html>
