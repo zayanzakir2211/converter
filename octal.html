@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="assets/4.png" type="image/png" />
+  <link rel="icon" href="assets/4.png" type="image/png" />
   <title>Octal Encoder/Decoder</title>
   <style>
     body {
@@ -21,6 +21,7 @@
       background-repeat: no-repeat;
       background-position: center;
     }
+    
     #stars {
       position: fixed;
       top: 0; left: 0;
@@ -28,9 +29,11 @@
       height: 100%;
       z-index: -1;
     }
+    
     h1 {
       margin-bottom: 10px;
     }
+    
     textarea {
       width: 90%;
       max-width: 600px;
@@ -48,12 +51,14 @@
       margin-bottom: 10px;
       font-family: monospace;
     }
+    
     .controls {
       display: flex;
       align-items: center;
       gap: 15px;
       margin-bottom: 15px;
     }
+    
     .toggle {
       width: 90px;
       height: 30px;
@@ -68,6 +73,7 @@
       transition: background 0.3s ease;
       overflow: hidden;
     }
+    
     .knob {
       width: 30px;
       height: 30px;
@@ -85,9 +91,11 @@
       transition: left 0.3s ease, background 0.3s ease, color 0.3s ease;
       backdrop-filter: blur(6px);
     }
+    
     .toggle.on .knob {
       left: 65px;
     }
+    
     .arrow-left,
     .arrow-right {
       position: absolute;
@@ -97,24 +105,31 @@
       pointer-events: none;
       transition: opacity 0.3s ease;
     }
+    
     .arrow-left {
       left: 15px;
     }
+    
     .arrow-right {
       right: 15px;
     }
+    
     .toggle.on .arrow-left {
       opacity: 0;
     }
+    
     .toggle.on .arrow-right {
       opacity: 1;
     }
+    
     .toggle:not(.on) .arrow-left {
       opacity: 1;
     }
+    
     .toggle:not(.on) .arrow-right {
       opacity: 0;
     }
+    
     button {
       text-decoration: none;
       color: #00bfff;
@@ -128,28 +143,50 @@
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
-  cursor: pointer;
-
+      cursor: pointer;
     }
+    
     button:hover {
       background: rgba(0, 191, 255, 0.3);
       color: #ffffff;
       box-shadow: 0 6px 40px rgba(0, 191, 255, 0.4);
     }
+    
+    select {
+      background: rgba(0, 191, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
+      color: #00bfff;
+      border: none;
+      padding: 6px 12px;
+      font-size: 14px;
+      border-radius: 8px;
+      font-family: monospace;
+      cursor: pointer;
+    }
+    
     a {
       color: #00bfff;
       text-decoration: none;
       margin-top: 20px;
     }
+    
+    .error {
+      color: #ff5555;
+      margin-top: 10px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
- <canvas id="stars"></canvas>
+  <canvas id="stars"></canvas>
+  
   <h1>Octal Encoder/Decoder</h1>
-
+  
   <label for="input">Input</label>
   <textarea id="input" placeholder="Enter your text or octal..."></textarea>
-
+  
   <div class="controls">
     <span id="modeLabel" style="color: #aaa; font-size: 14px;">Encode</span>
     <div id="neonToggle" class="toggle">
@@ -160,59 +197,158 @@
     <span style="color: #aaa; font-size: 14px;">Decode</span>
     <button onclick="convert()">Convert</button>
   </div>
-
+  
+  <!-- Dropdown for encoding/decoding type -->
+  <select id="conversionType" title="Choose conversion type">
+    <option value="text">ASCII</option>
+    <option value="decimal">Decimal</option>
+  </select>
+  
   <label for="output">Output</label>
   <textarea id="output" readonly placeholder="Result will appear here..."></textarea>
+  
+  <div id="error" class="error"></div>
+  
   <button onclick="copyOutput()">Copy Output</button>
-
   <a href="index.html">← Back to Home</a>
-
+  
   <script>
     let isDecode = false;
-
     const toggle = document.getElementById('neonToggle');
     const knob = toggle.querySelector('.knob');
-
+    const errorDiv = document.getElementById('error');
+    
+    // Toggle between encode and decode modes
     toggle.addEventListener('click', () => {
       toggle.classList.toggle('on');
       isDecode = toggle.classList.contains('on');
+      knob.textContent = isDecode ? '' : '';
+      document.getElementById('input').value = '';
+      document.getElementById('output').value = '';
+      errorDiv.textContent = '';
     });
-
-    // Encode text to octal
+    
+    // Text to octal (each char to 3-digit octal)
     function textToOctal(text) {
       return text.split('').map(char => {
         return char.charCodeAt(0).toString(8).padStart(3, '0');
       }).join(' ');
     }
-
-    // Decode octal to text
+    
+    // Octal to text
     function octalToText(octalStr) {
-      return octalStr.trim().split(/\s+/).map(oct => {
-        if (!/^[0-7]+$/.test(oct)) throw new Error("Invalid octal digit.");
+      // Remove any non-octal characters and split into 3-digit chunks
+      const octalString = octalStr.replace(/[^0-7]/g, '');
+      const octalArray = [];
+      
+      for (let i = 0; i < octalString.length; i += 3) {
+        octalArray.push(octalString.substr(i, 3));
+      }
+      
+      return octalArray.map(oct => {
+        if (!/^[0-7]+$/.test(oct)) {
+          throw new Error("Invalid octal digit: " + oct);
+        }
         return String.fromCharCode(parseInt(oct, 8));
       }).join('');
     }
-
+    
+    // Decimal number to octal
+    function decimalToOctal(decimalStr) {
+      if (!/^\d+$/.test(decimalStr)) {
+        throw new Error("Invalid decimal number! Use digits only.");
+      }
+      
+      const number = parseInt(decimalStr, 10);
+      if (number > Number.MAX_SAFE_INTEGER) {
+        throw new Error("Number is too large!");
+      }
+      
+      return number.toString(8);
+    }
+    
+    // Octal to decimal
+    function octalToDecimal(octalStr) {
+      if (!/^[0-7]+$/.test(octalStr)) {
+        throw new Error("Invalid octal number! Use only digits 0-7.");
+      }
+      
+      return parseInt(octalStr, 8).toString();
+    }
+    
+    // Convert button handler
+    function convert() {
+      const input = document.getElementById("input").value.trim();
+      const conversionType = document.getElementById("conversionType").value;
+      let result = "";
+      
+      errorDiv.textContent = '';
+      
+      if (!input) {
+        errorDiv.textContent = "Please enter some input.";
+        return;
+      }
+      
+      try {
+        if (conversionType === "text") {
+          if (isDecode) {
+            // Octal to text
+            result = octalToText(input);
+          } else {
+            // Text to octal
+            result = textToOctal(input);
+          }
+        } else if (conversionType === "decimal") {
+          if (isDecode) {
+            // Octal to decimal
+            result = octalToDecimal(input);
+          } else {
+            // Decimal to octal
+            result = decimalToOctal(input);
+          }
+        }
+        
+        document.getElementById("output").value = result;
+      } catch (e) {
+        errorDiv.textContent = "Conversion failed: " + e.message;
+      }
+    }
+    
+    // Copy output to clipboard
+    function copyOutput() {
+      const output = document.getElementById("output");
+      output.select();
+      document.execCommand("copy");
+    }
+    
+    // Handle Enter key for conversion
+    document.getElementById("input").addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        convert();
+      }
+    });
+    
     // Starfield with guaranteed working mouse hover effect
     const canvas = document.getElementById('stars');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
+    
     let mouse = { x: canvas.width/2, y: canvas.height/2 }; // Initialize mouse position
-
+    
     // Track mouse movement
     window.addEventListener('mousemove', (e) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
     });
-
+    
     // Handle window resize
     window.addEventListener('resize', () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     });
-
+    
     // Create stars
     const stars = [];
     const starCount = 120;
@@ -226,7 +362,7 @@
         vy: Math.random() * 0.1 + 0.1  // Slow falling speed
       });
     }
-
+    
     function updateStars() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
@@ -266,37 +402,8 @@
       
       requestAnimationFrame(updateStars);
     }
-
+    
     updateStars(); // Start animation
-    function convert() {
-      const input = document.getElementById("input").value.trim();
-      let result = "";
-
-      try {
-        if (isDecode) {
-          result = octalToText(input);
-        } else {
-          result = textToOctal(input);
-        }
-        document.getElementById("output").value = result;
-      } catch (e) {
-        alert("Conversion failed: " + e.message);
-      }
-    }
-
-    function copyOutput() {
-      const output = document.getElementById("output");
-      output.select();
-      document.execCommand("copy");
-    }
-
-    document.getElementById("input").addEventListener("keydown", function (e) {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        convert();
-      }
-    });
   </script>
-
 </body>
 </html>
