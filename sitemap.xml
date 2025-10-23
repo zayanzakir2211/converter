@@ -3,7 +3,7 @@
 
   <!-- Home -->
   <url>
-    <loc>https://converter-99l.pages.dev/</loc>
+    <loc>https://deadhydra.pages.dev/</loc>
     <lastmod>2025-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
@@ -11,77 +11,77 @@
 
   <!-- Tool Pages -->
   <url>
-    <loc>https://converter-99l.pages.dev/base64.html</loc>
+    <loc>https://deadhydra.pages.dev/base64.html</loc>
     <lastmod>2025-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://converter-99l.pages.dev/base32.html</loc>
+    <loc>https://deadhydra.pages.dev/base32.html</loc>
     <lastmod>2025-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://converter-99l.pages.dev/binary.html</loc>
+    <loc>https://deadhydra.pages.dev/binary.html</loc>
     <lastmod>2025-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://converter-99l.pages.dev/octal.html</loc>
+    <loc>https://deadhydra.pages.dev/octal.html</loc>
     <lastmod>2025-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://converter-99l.pages.dev/hex.html</loc>
+    <loc>https://deadhydra.pages.dev/hex.html</loc>
     <lastmod>2025-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://converter-99l.pages.dev/morse.html</loc>
+    <loc>https://deadhydra.pages.dev/morse.html</loc>
     <lastmod>2025-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://converter-99l.pages.dev/deadhydra.html</loc>
+    <loc>https://deadhydra.pages.dev/deadhydra.html</loc>
     <lastmod>2025-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://converter-99l.pages.dev/sha256.html</loc>
+    <loc>https://deadhydra.pages.dev/sha256.html</loc>
     <lastmod>2025-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://converter-99l.pages.dev/sha512.html</loc>
+    <loc>https://deadhydra.pages.dev/sha512.html</loc>
     <lastmod>2025-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://converter-99l.pages.dev/md5.html</loc>
+    <loc>https://deadhydra.pages.dev/md5.html</loc>
     <lastmod>2025-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://converter-99l.pages.dev/pass.html</loc>
+    <loc>https://deadhydra.pages.dev/pass.html</loc>
     <lastmod>2025-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
