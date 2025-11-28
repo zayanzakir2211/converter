@@ -59,7 +59,7 @@
   "featureList": "Base64 Encoder/Decoder, Base32 Encoder/Decoder, Binary Converter, Octal Converter, Hex Converter, Morse Code Translator, SHA-256 Hash Generator, SHA3-512 Hash Generator, MD5 Hash Generator, Password Generator"
 }
 </script>
-</script>
+
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091085127978476"
      crossorigin="anonymous"></script>
   <style>
@@ -75,7 +75,7 @@
       font-family: 'Segoe UI', sans-serif;
       display: block;
       padding: 20px;
-      background-image: url(assets/1.png);
+      background-image: url('assets/1.png');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
@@ -251,13 +251,22 @@
     window.addEventListener('resize', () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      // Reposition stars that are now out of bounds
+      stars.forEach(star => {
+        if (star.x < 0 || star.x > canvas.width || star.y < 0 || star.y > canvas.height) {
+          star.x = Math.random() * canvas.width;
+          star.y = Math.random() * canvas.height;
+          star.vx = Math.random() * 0.2 - 0.1;
+          star.vy = Math.random() * 0.1 + 0.1;
+        }
+      });
     });
 
     // Create stars
     const stars = [];
     const starCount = 120;
     
-    for (let i = 0; i < starCount; i++) {
+    for (let starIndex = 0; starIndex < starCount; starIndex++) {
       stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -288,7 +297,7 @@
         star.y += star.vy;
         
         // Reset if out of bounds
-        if (star.x < 0 || star.x > canvas.width || star.y > canvas.height) {
+        if (star.x < 0 || star.x > canvas.width || star.y < 0 || star.y > canvas.height) {
           star.x = Math.random() * canvas.width;
           star.y = -10;
           star.vx = Math.random() * 0.2 - 0.1;
