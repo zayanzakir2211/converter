@@ -226,7 +226,7 @@
 
   <label for="output">Output</label>
   <textarea id="output" readonly placeholder="Result will appear here..."></textarea>
-  <button onclick="copyOutput()">Copy Output</button>
+  <button id="copyBtn" onclick="copyOutput()">Copy Output</button>
 
   <a href="index.html">← Back to Home</a>
 
@@ -258,6 +258,21 @@
     alert("Conversion failed: " + e.message);
   }
 }
+
+    function copyOutput() {
+      const output = document.getElementById("output");
+      output.select();
+      output.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+      
+      // Visual feedback
+      const copyBtn = document.getElementById('copyBtn');
+      const originalText = copyBtn.textContent;
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => {
+        copyBtn.textContent = originalText;
+      }, 2000);
+    }
 
     // Starfield with guaranteed working mouse hover effect
     const canvas = document.getElementById('stars');
