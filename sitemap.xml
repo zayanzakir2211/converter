@@ -4,7 +4,7 @@
   <!-- Home -->
   <url>
     <loc>https://www.deadhydra.me/</loc>
-    <lastmod>2025-11-30</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -12,79 +12,94 @@
   <!-- Tool Pages -->
   <url>
     <loc>https://www.deadhydra.me/base64.html</loc>
-    <lastmod>2025-11-30</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://www.deadhydra.me/base32.html</loc>
-    <lastmod>2025-11-30</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.deadhydra.me/binary.html</loc>
-    <lastmod>2025-11-30</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.deadhydra.me/octal.html</loc>
-    <lastmod>2025-11-30</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.deadhydra.me/hex.html</loc>
-    <lastmod>2025-11-30</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.deadhydra.me/morse.html</loc>
-    <lastmod>2025-11-30</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.deadhydra.me/deadhydra.html</loc>
-    <lastmod>2025-11-30</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://www.deadhydra.me/sha256.html</loc>
-    <lastmod>2025-11-30</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.deadhydra.me/sha512.html</loc>
-    <lastmod>2025-11-30</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.deadhydra.me/md5.html</loc>
-    <lastmod>2025-11-30</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.deadhydra.me/pass.html</loc>
-    <lastmod>2025-11-30</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+
+  <!-- Info Pages -->
+  <url>
+    <loc>https://www.deadhydra.me/about.html</loc>
+    <lastmod>2025-12-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.deadhydra.me/contact.html</loc>
+    <lastmod>2025-12-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
 
 </urlset>
