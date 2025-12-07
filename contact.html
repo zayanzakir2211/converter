@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact | The Hydra Tools</title>
   <meta name="robots" content="index,follow" />
+  <script src="https://www.google.com/recaptcha/api.js?render=6LcqyCMsAAAAAPLGbYjVZcDBpiJ37uKDn7SHJxGc"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script type="text/javascript">
     (function() {
@@ -67,31 +68,59 @@
       
       // Disable button and show loading state
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
+      submitBtn.textContent = 'Verifying...';
       statusMessage.className = 'status-message';
       statusMessage.style.display = 'none';
       
-      // Send email using EmailJS
-      emailjs.sendForm('service_skg2ead', 'template_va8mxub', this)
-        .then(function() {
-          // Success
-          statusMessage.textContent = '✓ Message sent successfully! We\'ll get back to you soon.';
-          statusMessage.className = 'status-message success';
-          document.getElementById('contact-form').reset();
+      // Execute reCAPTCHA v3
+      grecaptcha.ready(function() {
+        grecaptcha.execute('6LcqyCMsAAAAAPLGbYjVZcDBpiJ37uKDn7SHJxGc', {action: 'submit'}).then(function(token) {
+          // Add the reCAPTCHA token to the form data
+          const formElement = document.getElementById('contact-form');
           
-          // Re-enable button
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Send Message';
-        }, function(error) {
-          // Error
-          statusMessage.textContent = '✗ Failed to send message. Please try again or email us directly.';
+          // Update button text
+          submitBtn.textContent = 'Sending...';
+          
+          // Create form data with reCAPTCHA token
+          const templateParams = {
+            user_name: formElement.user_name.value,
+            user_email: formElement.user_email.value,
+            message: formElement.message.value,
+            'g-recaptcha-response': token
+          };
+          
+          // Send email using EmailJS with reCAPTCHA token
+          emailjs.send('service_skg2ead', 'template_va8mxub', templateParams)
+            .then(function() {
+              // Success
+              statusMessage.textContent = '✓ Message sent successfully! We\'ll get back to you soon.';
+              statusMessage.className = 'status-message success';
+              formElement.reset();
+              
+              // Re-enable button
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Send Message';
+            }, function(error) {
+              // Error
+              statusMessage.textContent = '✗ Failed to send message. Please try again or email us directly.';
+              statusMessage.className = 'status-message error';
+              console.error('EmailJS Error:', error);
+              
+              // Re-enable button
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Send Message';
+            });
+        }).catch(function(error) {
+          // reCAPTCHA error
+          statusMessage.textContent = '✗ Security verification failed. Please refresh and try again.';
           statusMessage.className = 'status-message error';
-          console.error('EmailJS Error:', error);
+          console.error('reCAPTCHA Error:', error);
           
           // Re-enable button
           submitBtn.disabled = false;
           submitBtn.textContent = 'Send Message';
         });
+      });
     });
   </script>
 </body>
