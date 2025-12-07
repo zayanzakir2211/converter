@@ -39,6 +39,98 @@
     .status-message.success { background: #1a4d2e; color: #4ade80; border: 1px solid #4ade80; display: block; }
     .status-message.error { background: #4d1a1a; color: #ff6b6b; border: 1px solid #ff6b6b; display: block; }
     .g-recaptcha { margin: 8px 0; }
+    
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .modal-content {
+      position: relative;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      margin: 10% auto;
+      padding: 0;
+      border: 2px solid #00bfff;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 8px 32px rgba(0, 191, 255, 0.3);
+      animation: slideDown 0.4s ease-out;
+    }
+    .modal-header {
+      padding: 24px;
+      border-bottom: 1px solid rgba(0, 191, 255, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .modal-icon {
+      font-size: 48px;
+      line-height: 1;
+    }
+    .modal-icon.success { color: #4ade80; }
+    .modal-icon.error { color: #ff6b6b; }
+    .modal-icon.loading { 
+      color: #00bfff;
+      animation: spin 1s linear infinite;
+    }
+    .modal-header h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #00bfff;
+    }
+    .modal-body {
+      padding: 24px;
+      color: #e8f5ff;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid rgba(0, 191, 255, 0.2);
+      text-align: right;
+    }
+    .modal-button {
+      padding: 10px 24px;
+      background: #00bfff;
+      color: #0b0b0b;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+    .modal-button:hover {
+      background: #33ceff;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideDown {
+      from { 
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to { 
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
     .footer { margin-top: 32px; font-size: 14px; color: #9fb3c8; text-align: center; }
   </style>
 </head>
@@ -61,7 +153,61 @@
     <a href="index.html">Home</a> | <a href="privacy-policy.html">Privacy</a> | <a href="terms.html">Terms</a> | <a href="about.html">About</a>
   </div>
 
+  <!-- Modal -->
+  <div id="statusModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span id="modalIcon" class="modal-icon"></span>
+        <h2 id="modalTitle"></h2>
+      </div>
+      <div class="modal-body">
+        <p id="modalMessage"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-button" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Modal Functions
+    function showModal(type, title, message) {
+      const modal = document.getElementById('statusModal');
+      const icon = document.getElementById('modalIcon');
+      const titleEl = document.getElementById('modalTitle');
+      const messageEl = document.getElementById('modalMessage');
+      
+      // Set content based on type
+      if (type === 'success') {
+        icon.textContent = '✓';
+        icon.className = 'modal-icon success';
+        titleEl.textContent = title || 'Success!';
+      } else if (type === 'error') {
+        icon.textContent = '✗';
+        icon.className = 'modal-icon error';
+        titleEl.textContent = title || 'Error';
+      } else if (type === 'loading') {
+        icon.textContent = '⟳';
+        icon.className = 'modal-icon loading';
+        titleEl.textContent = title || 'Processing...';
+      }
+      
+      messageEl.textContent = message;
+      modal.style.display = 'block';
+    }
+    
+    function closeModal() {
+      document.getElementById('statusModal').style.display = 'none';
+    }
+    
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('statusModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+    
     document.getElementById('contact-form').addEventListener('submit', function(event) {
       event.preventDefault();
       
@@ -71,16 +217,16 @@
       // Check if reCAPTCHA is completed
       const recaptchaResponse = grecaptcha.getResponse();
       if (!recaptchaResponse) {
-        statusMessage.textContent = '✗ Please complete the reCAPTCHA verification.';
-        statusMessage.className = 'status-message error';
+        showModal('error', 'reCAPTCHA Required', 'Please complete the "I\'m not a robot" verification before submitting.');
         return;
       }
       
       // Disable button and show loading state
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending...';
-      statusMessage.className = 'status-message';
-      statusMessage.style.display = 'none';
+      
+      // Show loading modal
+      showModal('loading', 'Sending Message', 'Please wait while we send your message...');
       
       const formElement = document.getElementById('contact-form');
       
@@ -96,8 +242,7 @@
       emailjs.send('service_skg2ead', 'template_va8mxub', templateParams)
         .then(function() {
           // Success
-          statusMessage.textContent = '✓ Message sent successfully! We\'ll get back to you soon.';
-          statusMessage.className = 'status-message success';
+          showModal('success', 'Message Sent!', 'Thank you for contacting us! We\'ve received your message and will get back to you soon at ' + formElement.user_email.value);
           formElement.reset();
           grecaptcha.reset();
           
@@ -105,9 +250,27 @@
           submitBtn.disabled = false;
           submitBtn.textContent = 'Send Message';
         }, function(error) {
-          // Error
-          statusMessage.textContent = '✗ Failed to send message. Please try again or email us directly.';
-          statusMessage.className = 'status-message error';
+          // Error handling
+          let errorTitle = 'Sending Failed';
+          let errorMessage = 'Failed to send your message. Please try again or contact us directly at zayanzakir@icloud.com';
+          
+          if (error.text) {
+            // EmailJS API error
+            if (error.text.includes('captcha')) {
+              errorTitle = 'reCAPTCHA Error';
+              errorMessage = 'reCAPTCHA verification failed. Please try again or refresh the page.';
+            } else if (error.text.includes('rate limit')) {
+              errorTitle = 'Too Many Requests';
+              errorMessage = 'You\'ve sent too many messages recently. Please try again later.';
+            } else if (error.text.includes('network')) {
+              errorTitle = 'Network Error';
+              errorMessage = 'Connection failed. Please check your internet connection and try again.';
+            } else {
+              errorMessage = 'API Error: ' + error.text + '. Please contact us directly at zayanzakir@icloud.com';
+            }
+          }
+          
+          showModal('error', errorTitle, errorMessage);
           console.error('EmailJS Error:', error);
           
           // Re-enable button
