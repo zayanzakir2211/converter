@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary Meta Tags -->
+  <title>Free QR Code Generator Online | Create QR Codes Instantly | The Hydra Tools</title>
+  <meta name="title" content="Free QR Code Generator Online | Create QR Codes Instantly | The Hydra Tools">
+  <meta name="description" content="Free online QR code generator. Create QR codes for URLs, text, WiFi, contact info instantly. Download as PNG or SVG. No signup required.">
+  <meta name="keywords" content="qr code generator, qr code maker, free qr code, qr code creator, generate qr code, qr code online, custom qr code, wifi qr code">
+  <meta name="author" content="Zayan Zakir">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://www.deadhydra.me/qr-code.html">
+  <script src="https://www.google.com/recaptcha/api.js?render=6LcqyCMsAAAAAPLGbYjVZcDBpiJ37uKDn7SHJxGc"></script>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.deadhydra.me/qr-code.html">
+  <meta property="og:site_name" content="The Hydra">
+  <meta property="og:title" content="Free QR Code Generator Online | The Hydra Tools">
+  <meta property="og:description" content="Create QR codes instantly for free. Download as PNG or SVG.">
+  <meta property="og:image" content="https://www.deadhydra.me/assets/2.png">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://www.deadhydra.me/qr-code.html">
+  <meta name="twitter:title" content="Free QR Code Generator Online | The Hydra Tools">
+  <meta name="twitter:description" content="Create QR codes instantly for free.">
+  
+  <!-- QR Code Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  
+  <style>
+    body { 
+      font-family: 'Segoe UI', sans-serif; 
+      background-color: #121212; 
+      background-image: url('assets/1.png');
+      background-size: cover;
+      color: #e8f5ff; 
+      padding: 24px; 
+      max-width: 800px; 
+      margin: 0 auto; 
+    }
+    h1 { color: #00bfff; text-align: center; }
+    .container { background: rgba(0,0,0,0.7); padding: 24px; border-radius: 12px; margin-bottom: 20px; }
+    label { display: block; margin: 12px 0 6px; color: #00bfff; font-weight: 600; }
+    input, textarea, select { 
+      width: 100%; 
+      padding: 10px; 
+      border-radius: 8px; 
+      border: 1px solid #1e2a3a; 
+      background: #0a0a0a; 
+      color: #e8f5ff; 
+      font-family: 'Courier New', monospace;
+      box-sizing: border-box;
+    }
+    textarea { min-height: 100px; resize: vertical; }
+    button { 
+      width: 100%;
+      margin-top: 16px;
+      padding: 12px; 
+      border-radius: 8px; 
+      border: none; 
+      background: #00bfff; 
+      color: #0b0b0b; 
+      font-weight: 600; 
+      cursor: pointer; 
+      font-size: 16px;
+    }
+    button:hover { background: #33ceff; }
+    #qrResult { text-align: center; margin-top: 20px; }
+    #qrCanvas { 
+      border: 3px solid #00bfff; 
+      border-radius: 12px; 
+      background: white; 
+      padding: 20px;
+      max-width: 100%;
+    }
+    .download-btns { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+    .download-btns button { flex: 1; min-width: 120px; }
+    .share-btn { background: #1da1f2; }
+    .share-btn:hover { background: #1a91da; }
+    .footer { margin-top: 32px; font-size: 14px; color: #9fb3c8; text-align: center; }
+    .seo-content { margin-top: 32px; padding: 20px; background: rgba(0,0,0,0.5); border-radius: 8px; }
+    .seo-content h2 { color: #00bfff; font-size: 20px; }
+    .seo-content p { color: #80cfff; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <h1>QR Code Generator</h1>
+  
+  <div class="container">
+    <label for="qrInput">Enter Text or URL</label>
+    <textarea id="qrInput" placeholder="Enter URL, text, WiFi credentials, or any data..."></textarea>
+    
+    <label for="qrSize">QR Code Size</label>
+    <select id="qrSize">
+      <option value="200">Small (200x200)</option>
+      <option value="300" selected>Medium (300x300)</option>
+      <option value="400">Large (400x400)</option>
+      <option value="512">Extra Large (512x512)</option>
+    </select>
+    
+    <label for="qrColor">Color</label>
+    <input type="color" id="qrColor" value="#000000">
+    
+    <label for="qrBg">Background Color</label>
+    <input type="color" id="qrBg" value="#ffffff">
+    
+    <button onclick="generateQR()">Generate QR Code</button>
+  </div>
+  
+  <div id="qrResult" style="display:none;">
+    <canvas id="qrCanvas"></canvas>
+    <div class="download-btns">
+      <button onclick="downloadQR('png')">Download PNG</button>
+      <button onclick="downloadQR('svg')">Download SVG</button>
+      <button class="share-btn" onclick="shareQR()">Share 📤</button>
+    </div>
+  </div>
+
+  <div class="seo-content">
+    <h2>Free QR Code Generator</h2>
+    <p>Create custom QR codes instantly for free. Our QR code generator supports URLs, plain text, WiFi credentials, contact information, and more. Customize colors, download as PNG or SVG, and share directly. Perfect for marketing, business cards, event tickets, and product labeling. Generate unlimited QR codes with no registration required.</p>
+  </div>
+
+  <div class="footer">
+    <a href="index.html">Home</a> | 
+    <a href="about.html">About</a> | 
+    <a href="contact.html">Contact</a> | 
+    <a href="privacy-policy.html">Privacy</a> | 
+    <a href="terms.html">Terms</a>
+  </div>
+
+  <script>
+    function generateQR() {
+      const input = document.getElementById('qrInput').value.trim();
+      if (!input) {
+        alert('Please enter text or URL');
+        return;
+      }
+      
+      const size = parseInt(document.getElementById('qrSize').value);
+      const color = document.getElementById('qrColor').value;
+      const bgColor = document.getElementById('qrBg').value;
+      const canvas = document.getElementById('qrCanvas');
+      
+      QRCode.toCanvas(canvas, input, {
+        width: size,
+        margin: 2,
+        color: {
+          dark: color,
+          light: bgColor
+        }
+      }, function (error) {
+        if (error) {
+          console.error(error);
+          alert('Error generating QR code');
+        } else {
+          document.getElementById('qrResult').style.display = 'block';
+        }
+      });
+    }
+    
+    function downloadQR(format) {
+      const canvas = document.getElementById('qrCanvas');
+      const input = document.getElementById('qrInput').value.trim();
+      
+      if (format === 'png') {
+        const link = document.createElement('a');
+        link.download = 'qrcode.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      } else if (format === 'svg') {
+        const color = document.getElementById('qrColor').value;
+        const bgColor = document.getElementById('qrBg').value;
+        const size = parseInt(document.getElementById('qrSize').value);
+        
+        QRCode.toString(input, {
+          type: 'svg',
+          width: size,
+          color: { dark: color, light: bgColor }
+        }, function (error, svg) {
+          if (!error) {
+            const blob = new Blob([svg], { type: 'image/svg+xml' });
+            const link = document.createElement('a');
+            link.download = 'qrcode.svg';
+            link.href = URL.createObjectURL(blob);
+            link.click();
+          }
+        });
+      }
+    }
+    
+    function shareQR() {
+      const canvas = document.getElementById('qrCanvas');
+      canvas.toBlob(function(blob) {
+        const file = new File([blob], 'qrcode.png', { type: 'image/png' });
+        
+        if (navigator.share && navigator.canShare({ files: [file] })) {
+          navigator.share({
+            title: 'QR Code',
+            text: 'Check out this QR code!',
+            files: [file]
+          }).catch(console.error);
+        } else {
+          alert('Sharing not supported on this browser. Please download instead.');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
