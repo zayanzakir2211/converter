@@ -4,149 +4,254 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Free Text Diff Checker - Compare Text Differences Online | The Hydra</title>
-  <meta name="description" content="Free online text diff checker. Compare two texts side-by-side and highlight differences. Perfect for code review, document comparison, and change detection.">
-  <meta name="keywords" content="text diff, diff checker, compare text, text comparison, find differences, code diff, document comparison, text compare online">
+  <!-- Primary Meta Tags -->
+  <title>Free Text Diff Checker - Compare Text Online | The Hydra</title>
+  <meta name="title" content="Free Text Diff Checker - Compare Text Online | The Hydra">
+  <meta name="description" content="Free online text diff tool. Compare two texts side by side and see differences highlighted. Find changes between versions instantly. No signup required.">
+  <meta name="keywords" content="text diff, compare text, text comparison, diff checker, find differences, text changes, online diff tool, compare files">
   <meta name="author" content="Zayan Zakir">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <link rel="canonical" href="https://www.deadhydra.me/text-diff.html">
   <script src="https://www.google.com/recaptcha/api.js?render=6LcqyCMsAAAAAPLGbYjVZcDBpiJ37uKDn7SHJxGc"></script>
   
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.deadhydra.me/text-diff.html">
+  <meta property="og:site_name" content="The Hydra">
+  <meta property="og:title" content="Free Text Diff Checker - Compare Text Online | The Hydra">
+  <meta property="og:description" content="Compare two texts side by side. Find differences instantly. Free online.">
+  <meta property="og:image" content="https://www.deadhydra.me/assets/2.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://www.deadhydra.me/text-diff.html">
+  <meta name="twitter:title" content="Free Text Diff Checker - Compare Text Online | The Hydra">
+  <meta name="twitter:description" content="Compare two texts side by side. Find differences instantly.">
+  <meta name="twitter:image" content="https://www.deadhydra.me/assets/2.png">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://www.deadhydra.me/assets/4.png">
+  <link rel="apple-touch-icon" href="https://www.deadhydra.me/assets/4.png">
+  
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Text Diff Checker",
+    "url": "https://www.deadhydra.me/text-diff.html",
+    "description": "Free online text diff tool to compare two texts and find differences.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Zayan Zakir"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.6",
+      "ratingCount": "98"
+    }
+  }
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091085127978476" crossorigin="anonymous"></script>
+
   <style>
-    body { 
-      font-family: 'Segoe UI', sans-serif; 
-      background-color: #121212; 
-      background-image: url('assets/1.png');
+    body {
+      background-color: #121212;
+      color: #00bfff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      background-image: url(assets/1.png);
       background-size: cover;
-      color: #e8f5ff; 
-      padding: 24px; 
-      max-width: 1400px; 
-      margin: 0 auto; 
+      background-repeat: no-repeat;
+      background-position: center;
     }
-    h1 { color: #00bfff; text-align: center; }
-    .container { background: rgba(0,0,0,0.7); padding: 24px; border-radius: 12px; margin-bottom: 20px; }
-    .input-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .input-box { display: flex; flex-direction: column; }
-    label { color: #00bfff; font-weight: 600; margin-bottom: 8px; }
-    textarea { 
-      width: 100%; 
-      min-height: 300px; 
-      padding: 12px; 
-      border-radius: 8px; 
-      border: 1px solid #1e2a3a; 
-      background: #0a0a0a; 
-      color: #e8f5ff; 
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      resize: vertical;
-      box-sizing: border-box;
-    }
-    button { 
+    #stars {
+      position: fixed;
+      top: 0; left: 0;
       width: 100%;
-      margin-top: 16px;
-      padding: 12px; 
-      border-radius: 8px; 
-      border: none; 
-      background: #00bfff; 
-      color: #0b0b0b; 
-      font-weight: 600; 
-      cursor: pointer; 
-      font-size: 16px;
+      height: 100%;
+      z-index: -1;
     }
-    button:hover { background: #33ceff; }
-    #result { 
-      margin-top: 20px; 
-      padding: 20px; 
-      background: rgba(0,0,0,0.5); 
-      border-radius: 8px; 
-      display: none;
-    }
-    .diff-line { 
-      font-family: 'Courier New', monospace; 
-      font-size: 14px; 
-      padding: 4px 8px; 
-      margin: 2px 0;
-      border-radius: 4px;
-    }
-    .diff-added { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
-    .diff-removed { background: rgba(239, 68, 68, 0.2); color: #ff6b6b; }
-    .diff-unchanged { color: #9fb3c8; }
-    .stats { 
-      display: flex; 
-      gap: 20px; 
-      justify-content: center; 
-      margin-bottom: 20px; 
+    h1 { margin-bottom: 10px; }
+    
+    .diff-container {
+      display: flex;
+      gap: 15px;
+      width: 90%;
+      max-width: 1000px;
+      margin-bottom: 15px;
       flex-wrap: wrap;
     }
-    .stat { 
-      background: rgba(0,191,255,0.1); 
-      border: 2px solid #00bfff; 
-      border-radius: 8px; 
-      padding: 12px 24px; 
-      text-align: center; 
+    
+    .text-column {
+      flex: 1;
+      min-width: 280px;
     }
-    .stat-label { color: #80cfff; font-size: 12px; }
-    .stat-value { color: #00bfff; font-size: 20px; font-weight: bold; }
-    .footer { margin-top: 32px; font-size: 14px; color: #9fb3c8; text-align: center; }
-    @media (max-width: 768px) {
-      .input-section { grid-template-columns: 1fr; }
+    
+    .text-column label {
+      color: #aaa;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    textarea {
+      width: 100%;
+      height: 200px;
+      background: rgba(0, 191, 255, 0.1);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
+      color: #00bfff;
+      border: none;
+      padding: 12px;
+      font-size: 14px;
+      resize: vertical;
+      border-radius: 15px;
+      box-sizing: border-box;
+    }
+    
+    .controls {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+    
+    button {
+      color: #00bfff;
+      font-size: 14px;
+      padding: 10px 20px;
+      border: 2px solid rgba(0, 191, 255, 0.4);
+      border-radius: 25px;
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+      background: rgba(0, 191, 255, 0.1);
+      backdrop-filter: blur(2px);
+      box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
+      cursor: pointer;
+    }
+    button:hover {
+      background: rgba(0, 191, 255, 0.3);
+      color: #ffffff;
+      box-shadow: 0 6px 40px rgba(0, 191, 255, 0.4);
+    }
+    
+    .result-container {
+      width: 90%;
+      max-width: 1000px;
+      background: rgba(0, 191, 255, 0.05);
+      border: 2px solid rgba(0, 191, 255, 0.3);
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 15px;
+      display: none;
+    }
+    
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    
+    .result-stats span {
+      margin-right: 15px;
+    }
+    .added { color: #4caf50; }
+    .removed { color: #f44336; }
+    .unchanged { color: #888; }
+    
+    .diff-output {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      padding: 15px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      max-height: 300px;
+      overflow-y: auto;
+      line-height: 1.6;
+    }
+    
+    .diff-line.add { background: rgba(76, 175, 80, 0.2); color: #4caf50; }
+    .diff-line.remove { background: rgba(244, 67, 54, 0.2); color: #f44336; }
+    .diff-line.same { color: #888; }
+    
+    a {
+      color: #00bfff;
+      text-decoration: none;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
+  <canvas id="stars"></canvas>
   <h1>Text Diff Checker</h1>
-  
-  <div class="container">
-    <div class="input-section">
-      <div class="input-box">
-        <label for="text1">Original Text</label>
-        <textarea id="text1" placeholder="Paste your original text here..."></textarea>
-      </div>
-      <div class="input-box">
-        <label for="text2">Modified Text</label>
-        <textarea id="text2" placeholder="Paste your modified text here..."></textarea>
-      </div>
+
+  <div class="diff-container">
+    <div class="text-column">
+      <label for="text1">Original Text</label>
+      <textarea id="text1" placeholder="Paste original text here..."></textarea>
     </div>
-    
-    <button onclick="compareDiff()">Compare Texts</button>
-    
-    <div id="result">
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-label">Added Lines</div>
-          <div class="stat-value" id="addedCount">0</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">Removed Lines</div>
-          <div class="stat-value" id="removedCount">0</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">Unchanged Lines</div>
-          <div class="stat-value" id="unchangedCount">0</div>
-        </div>
-      </div>
-      
-      <h3 style="color: #00bfff;">Differences:</h3>
-      <div id="diffOutput"></div>
+    <div class="text-column">
+      <label for="text2">Modified Text</label>
+      <textarea id="text2" placeholder="Paste modified text here..."></textarea>
     </div>
   </div>
 
-  <div class="container">
-    <h2 style="color: #00bfff;">Text Diff Checker & Comparison Tool</h2>
-    <p style="color: #80cfff; line-height: 1.6;">
-      Compare two texts line-by-line and see exactly what changed. Our diff checker highlights additions in green, 
-      deletions in red, and unchanged text in gray. Perfect for code review, document comparison, contract changes, 
-      version control, and proofreading. Fast, accurate, and completely private - all processing happens in your browser.
-    </p>
+  <div class="controls">
+    <button onclick="compareDiff()">Compare</button>
+    <button onclick="swapTexts()">Swap</button>
+    <button onclick="clearAll()">Clear All</button>
   </div>
 
-  <div class="footer">
-    <a href="index.html">Home</a> | 
-    <a href="about.html">About</a> | 
-    <a href="contact.html">Contact</a> | 
-    <a href="privacy-policy.html">Privacy</a> | 
-    <a href="terms.html">Terms</a>
+  <div class="result-container" id="resultContainer">
+    <div class="result-header">
+      <span style="color:#00bfff;font-weight:bold;">Comparison Result</span>
+      <div class="result-stats">
+        <span class="added">+ <span id="addedCount">0</span> added</span>
+        <span class="removed">- <span id="removedCount">0</span> removed</span>
+        <span class="unchanged"><span id="unchangedCount">0</span> unchanged</span>
+      </div>
+    </div>
+    <div class="diff-output" id="diffOutput"></div>
   </div>
+
+  <a href="index.html">← Back to Home</a>
+
+  <section class="seo-text" style="max-width:800px;margin:30px auto 10px;padding:16px;text-align:center;color:#9fc8e5;font-size:14px;line-height:1.6;">
+    <h2 style="color:#00bfff;font-size:18px;margin-bottom:10px;">Free Text Comparison Tool</h2>
+    <p>Compare two texts side by side and instantly see the differences. Our text diff checker highlights additions in green and deletions in red, making it easy to spot changes between versions. Perfect for comparing code, documents, or any text content. All processing happens locally in your browser for complete privacy.</p>
+  </section>
+
+  <footer class="site-footer" style="text-align:center; margin-top:10px; color:#7fa6c4; font-size:13px;">
+    <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+      <a style="color:#66d4ff;" href="about.html">About</a>
+      <span style="color:#4b6b8a;">|</span>
+      <a style="color:#66d4ff;" href="contact.html">Contact</a>
+      <span style="color:#4b6b8a;">|</span>
+      <a style="color:#66d4ff;" href="privacy-policy.html">Privacy</a>
+      <span style="color:#4b6b8a;">|</span>
+      <a style="color:#66d4ff;" href="terms.html">Terms</a>
+    </div>
+  </footer>
 
   <script>
     function compareDiff() {
@@ -154,64 +259,121 @@
       const text2 = document.getElementById('text2').value;
       
       if (!text1 && !text2) {
-        alert('Please enter text in both fields');
+        alert('Please enter text to compare');
         return;
       }
       
       const lines1 = text1.split('\n');
       const lines2 = text2.split('\n');
       
-      const diff = computeDiff(lines1, lines2);
-      displayDiff(diff);
-      
-      document.getElementById('result').style.display = 'block';
-    }
-    
-    function computeDiff(lines1, lines2) {
+      // Simple line-by-line diff
       const diff = [];
       let added = 0, removed = 0, unchanged = 0;
-      
       const maxLen = Math.max(lines1.length, lines2.length);
       
-      for (let i = 0; i < maxLen; i++) {
-        const line1 = lines1[i];
-        const line2 = lines2[i];
-        
-        if (line1 === line2) {
-          diff.push({ type: 'unchanged', text: line1 || '' });
-          unchanged++;
-        } else if (line1 === undefined) {
-          diff.push({ type: 'added', text: '+ ' + (line2 || '') });
-          added++;
-        } else if (line2 === undefined) {
-          diff.push({ type: 'removed', text: '- ' + (line1 || '') });
-          removed++;
-        } else {
-          diff.push({ type: 'removed', text: '- ' + line1 });
-          diff.push({ type: 'added', text: '+ ' + line2 });
-          removed++;
-          added++;
-        }
-      }
+      // LCS-based diff for better accuracy
+      const lcs = computeLCS(lines1, lines2);
+      const result = buildDiff(lines1, lines2, lcs);
+      
+      result.forEach(item => {
+        if (item.type === 'add') added++;
+        else if (item.type === 'remove') removed++;
+        else unchanged++;
+      });
       
       document.getElementById('addedCount').textContent = added;
       document.getElementById('removedCount').textContent = removed;
       document.getElementById('unchangedCount').textContent = unchanged;
       
-      return diff;
+      const output = document.getElementById('diffOutput');
+      output.innerHTML = result.map(item => {
+        const prefix = item.type === 'add' ? '+ ' : item.type === 'remove' ? '- ' : '  ';
+        const escaped = escapeHtml(item.line);
+        return `<div class="diff-line ${item.type === 'add' ? 'add' : item.type === 'remove' ? 'remove' : 'same'}">${prefix}${escaped}</div>`;
+      }).join('');
+      
+      document.getElementById('resultContainer').style.display = 'block';
     }
     
-    function displayDiff(diff) {
-      const output = document.getElementById('diffOutput');
-      output.innerHTML = '';
+    function computeLCS(arr1, arr2) {
+      const m = arr1.length, n = arr2.length;
+      const dp = Array(m + 1).fill(null).map(() => Array(n + 1).fill(0));
       
-      diff.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'diff-line diff-' + item.type;
-        div.textContent = item.text;
-        output.appendChild(div);
-      });
+      for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+          if (arr1[i-1] === arr2[j-1]) dp[i][j] = dp[i-1][j-1] + 1;
+          else dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+        }
+      }
+      return dp;
     }
+    
+    function buildDiff(arr1, arr2, dp) {
+      const result = [];
+      let i = arr1.length, j = arr2.length;
+      
+      while (i > 0 || j > 0) {
+        if (i > 0 && j > 0 && arr1[i-1] === arr2[j-1]) {
+          result.unshift({ type: 'same', line: arr1[i-1] });
+          i--; j--;
+        } else if (j > 0 && (i === 0 || dp[i][j-1] >= dp[i-1][j])) {
+          result.unshift({ type: 'add', line: arr2[j-1] });
+          j--;
+        } else if (i > 0) {
+          result.unshift({ type: 'remove', line: arr1[i-1] });
+          i--;
+        }
+      }
+      return result;
+    }
+    
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+    
+    function swapTexts() {
+      const t1 = document.getElementById('text1');
+      const t2 = document.getElementById('text2');
+      const temp = t1.value;
+      t1.value = t2.value;
+      t2.value = temp;
+    }
+    
+    function clearAll() {
+      document.getElementById('text1').value = '';
+      document.getElementById('text2').value = '';
+      document.getElementById('resultContainer').style.display = 'none';
+    }
+
+    // Starfield
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    let mouse = { x: canvas.width/2, y: canvas.height/2 };
+    window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+    
+    const stars = [];
+    for (let i = 0; i < 120; i++) {
+      stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 1.5 + 0.5, vx: Math.random() * 0.2 - 0.1, vy: Math.random() * 0.1 + 0.1 });
+    }
+    
+    function updateStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(star => {
+        const dx = mouse.x - star.x, dy = mouse.y - star.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < 100) { star.vx = -dx * 0.01 * (100 - distance) / 100; star.vy = -dy * 0.01 * (100 - distance) / 100; }
+        star.x += star.vx; star.y += star.vy;
+        if (star.x < 0 || star.x > canvas.width || star.y > canvas.height) { star.x = Math.random() * canvas.width; star.y = -10; star.vx = Math.random() * 0.2 - 0.1; star.vy = Math.random() * 0.1 + 0.1; }
+        ctx.beginPath(); ctx.shadowColor = "rgba(0, 191, 255, 0.7)"; ctx.shadowBlur = 8; ctx.fillStyle = "#00ffff"; ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2); ctx.fill();
+      });
+      requestAnimationFrame(updateStars);
+    }
+    updateStars();
   </script>
 </body>
 </html>

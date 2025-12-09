@@ -4,321 +4,513 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API Documentation - Free Encoding & Hashing API | The Hydra Tools</title>
-  <meta name="description" content="Free frontend API for Base64, Binary, Hex, Morse encoding/decoding, and hash generation. Simple JavaScript examples with embed widgets.">
-  <meta name="keywords" content="encoding api, base64 api, hash api, free api, javascript api, frontend api, developer tools api">
+  <!-- Primary Meta Tags -->
+  <title>Free API Access & Embed Widgets - Developer Tools | The Hydra</title>
+  <meta name="title" content="Free API Access & Embed Widgets - Developer Tools | The Hydra">
+  <meta name="description" content="Free API documentation and embed widgets for encoding/decoding tools. Integrate Base64, MD5, SHA256 and more into your website or app. Copy-paste ready code snippets.">
+  <meta name="keywords" content="API access, embed widgets, encoding API, Base64 API, MD5 API, SHA256 API, developer tools, integration, embed code, JavaScript widgets">
   <meta name="author" content="Zayan Zakir">
-  <meta name="robots" content="index, follow">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <link rel="canonical" href="https://www.deadhydra.me/api-docs.html">
   <script src="https://www.google.com/recaptcha/api.js?render=6LcqyCMsAAAAAPLGbYjVZcDBpiJ37uKDn7SHJxGc"></script>
   
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.deadhydra.me/api-docs.html">
+  <meta property="og:site_name" content="The Hydra">
+  <meta property="og:title" content="Free API Access & Embed Widgets | The Hydra">
+  <meta property="og:description" content="API documentation and embed widgets for encoding tools. Integrate into your website.">
+  <meta property="og:image" content="https://www.deadhydra.me/assets/2.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://www.deadhydra.me/api-docs.html">
+  <meta name="twitter:title" content="Free API Access & Embed Widgets | The Hydra">
+  <meta name="twitter:description" content="API and embed widgets for encoding tools. Free integration.">
+  <meta name="twitter:image" content="https://www.deadhydra.me/assets/2.png">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://www.deadhydra.me/assets/4.png">
+  <link rel="apple-touch-icon" href="https://www.deadhydra.me/assets/4.png">
+  
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "API Documentation & Embed Widgets",
+    "url": "https://www.deadhydra.me/api-docs.html",
+    "description": "API documentation and embed widgets for The Hydra encoding tools.",
+    "author": {
+      "@type": "Person",
+      "name": "Zayan Zakir"
+    },
+    "mainEntity": {
+      "@type": "APIReference",
+      "name": "The Hydra Tools API",
+      "programmingLanguage": "JavaScript"
+    }
+  }
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091085127978476" crossorigin="anonymous"></script>
+
   <style>
-    body { 
-      font-family: 'Segoe UI', sans-serif; 
-      background-color: #121212; 
-      background-image: url('assets/1.png');
-      background-size: cover;
-      color: #e8f5ff; 
-      padding: 24px; 
-      max-width: 1000px; 
-      margin: 0 auto; 
-    }
-    h1 { color: #00bfff; text-align: center; }
-    h2, h3 { color: #00bfff; }
-    .container { background: rgba(0,0,0,0.7); padding: 24px; border-radius: 12px; margin-bottom: 20px; }
-    code { 
-      background: #0a0a0a; 
-      color: #4ade80; 
-      padding: 2px 6px; 
-      border-radius: 4px; 
-      font-family: 'Courier New', monospace;
-    }
-    pre { 
-      background: #0a0a0a; 
-      color: #e8f5ff; 
-      padding: 16px; 
-      border-radius: 8px; 
-      overflow-x: auto;
-      border: 1px solid #1e2a3a;
-    }
-    .endpoint { 
-      background: rgba(0,191,255,0.1); 
-      border-left: 4px solid #00bfff; 
-      padding: 16px; 
-      margin: 16px 0; 
-      border-radius: 4px;
-    }
-    .method { 
-      display: inline-block;
-      background: #10b981; 
-      color: white; 
-      padding: 4px 12px; 
-      border-radius: 4px; 
-      font-weight: bold;
-      font-size: 12px;
-      margin-right: 8px;
-    }
-    .embed-section {
-      background: rgba(16, 185, 129, 0.1);
-      border: 2px solid #10b981;
+    body {
+      background-color: #121212;
+      color: #00bfff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
       padding: 20px;
-      border-radius: 8px;
-      margin: 20px 0;
+      background-image: url(assets/1.png);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
     }
-    .copy-btn {
-      background: #00bfff;
-      color: #0b0b0b;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
+    #stars {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    h1 { margin-bottom: 10px; }
+    h2 { color: #00bfff; font-size: 18px; margin: 20px 0 10px; }
+    
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .tab-btn {
+      color: #00bfff;
+      font-size: 14px;
+      padding: 10px 20px;
+      border: 2px solid rgba(0, 191, 255, 0.4);
+      border-radius: 25px;
+      transition: background 0.3s, color 0.3s;
+      background: rgba(0, 191, 255, 0.1);
       cursor: pointer;
-      font-weight: 600;
-      margin-top: 8px;
     }
-    .copy-btn:hover { background: #33ceff; }
-    .footer { margin-top: 32px; font-size: 14px; color: #9fb3c8; text-align: center; }
-    a { color: #66d4ff; }
-    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
-    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #1e2a3a; }
-    th { background: rgba(0,191,255,0.2); color: #00bfff; }
+    .tab-btn:hover, .tab-btn.active {
+      background: rgba(0, 191, 255, 0.3);
+      color: #ffffff;
+    }
+    
+    .content-section {
+      width: 90%;
+      max-width: 800px;
+      display: none;
+    }
+    .content-section.active { display: block; }
+    
+    .code-block {
+      background: rgba(0, 0, 0, 0.4);
+      border: 2px solid rgba(0, 191, 255, 0.3);
+      border-radius: 15px;
+      padding: 15px;
+      margin: 10px 0 20px;
+      position: relative;
+    }
+    
+    .code-block pre {
+      margin: 0;
+      color: #80cfff;
+      font-family: 'Consolas', monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-x: auto;
+    }
+    
+    .code-block .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: #00bfff;
+      font-size: 12px;
+      padding: 5px 10px;
+      border: 1px solid rgba(0, 191, 255, 0.4);
+      border-radius: 15px;
+      background: rgba(0, 191, 255, 0.1);
+      cursor: pointer;
+    }
+    .code-block .copy-btn:hover {
+      background: rgba(0, 191, 255, 0.3);
+    }
+    
+    .tool-card {
+      background: rgba(0, 191, 255, 0.05);
+      border: 2px solid rgba(0, 191, 255, 0.3);
+      border-radius: 15px;
+      padding: 15px;
+      margin: 10px 0;
+    }
+    
+    .tool-card h3 {
+      color: #00bfff;
+      font-size: 16px;
+      margin: 0 0 10px;
+    }
+    
+    .tool-card p {
+      color: #80cfff;
+      font-size: 14px;
+      margin: 0 0 10px;
+    }
+    
+    .embed-preview {
+      border: 2px dashed rgba(0, 191, 255, 0.3);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 10px 0;
+      background: rgba(0, 0, 0, 0.2);
+      min-height: 100px;
+    }
+    
+    select {
+      background: rgba(0, 191, 255, 0.1);
+      color: #00bfff;
+      border: 2px solid rgba(0, 191, 255, 0.4);
+      border-radius: 10px;
+      padding: 8px 15px;
+      font-size: 14px;
+      margin: 10px 0;
+      cursor: pointer;
+    }
+    
+    a {
+      color: #00bfff;
+      text-decoration: none;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
-  <h1>API Documentation</h1>
-  
-  <div class="container">
-    <h2>Frontend JavaScript API</h2>
-    <p>Use our tools programmatically in your web applications. All processing happens client-side for privacy and speed.</p>
-    
-    <h3>🔹 Base64 Encoding/Decoding</h3>
-    <div class="endpoint">
-      <span class="method">JS</span>
-      <strong>Base64 Encode</strong>
-      <pre><code>// Encode text to Base64
-const encoded = btoa("Hello World");
-console.log(encoded); // SGVsbG8gV29ybGQ=
+  <canvas id="stars"></canvas>
+  <h1>API & Embed Widgets</h1>
+  <p style="color:#aaa;margin-bottom:20px;">Integrate our tools into your website or app</p>
 
-// Decode Base64 to text
-const decoded = atob("SGVsbG8gV29ybGQ=");
-console.log(decoded); // Hello World</code></pre>
-    </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('js-api')">JavaScript API</button>
+    <button class="tab-btn" onclick="showTab('embed')">Embed Widgets</button>
+    <button class="tab-btn" onclick="showTab('examples')">Examples</button>
+  </div>
+
+  <!-- JavaScript API Tab -->
+  <div class="content-section active" id="js-api">
+    <h2>JavaScript Functions</h2>
+    <p style="color:#aaa;font-size:14px;">Use these functions directly in your JavaScript code. All processing happens client-side.</p>
     
-    <h3>🔹 Binary Conversion</h3>
-    <div class="endpoint">
-      <span class="method">JS</span>
-      <strong>Text to Binary</strong>
-      <pre><code>// Text to Binary
-function textToBinary(text) {
-  return text.split('').map(char => 
-    char.charCodeAt(0).toString(2).padStart(8, '0')
-  ).join(' ');
+    <div class="tool-card">
+      <h3>Base64 Encode/Decode</h3>
+      <p>Convert text to Base64 and back.</p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre>// Base64 Encode
+function base64Encode(text) {
+  return btoa(unescape(encodeURIComponent(text)));
 }
 
-console.log(textToBinary("Hi")); // 01001000 01101001
-
-// Binary to Text
-function binaryToText(binary) {
-  return binary.split(' ').map(bin => 
-    String.fromCharCode(parseInt(bin, 2))
-  ).join('');
-}
-
-console.log(binaryToText("01001000 01101001")); // Hi</code></pre>
-    </div>
-    
-    <h3>🔹 Hex Conversion</h3>
-    <div class="endpoint">
-      <span class="method">JS</span>
-      <strong>Text to Hex</strong>
-      <pre><code>// Text to Hex
-function textToHex(text) {
-  return Array.from(text).map(c => 
-    c.charCodeAt(0).toString(16).padStart(2, '0')
-  ).join(' ');
-}
-
-console.log(textToHex("Hello")); // 48 65 6c 6c 6f
-
-// Hex to Text
-function hexToText(hex) {
-  return hex.split(' ').map(h => 
-    String.fromCharCode(parseInt(h, 16))
-  ).join('');
-}
-
-console.log(hexToText("48 65 6c 6c 6f")); // Hello</code></pre>
-    </div>
-    
-    <h3>🔹 Hash Generation (SHA-256)</h3>
-    <div class="endpoint">
-      <span class="method">JS</span>
-      <strong>Generate SHA-256 Hash</strong>
-      <pre><code>// Using Web Crypto API
-async function sha256(message) {
-  const msgBuffer = new TextEncoder().encode(message);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  return hashHex;
+// Base64 Decode
+function base64Decode(encoded) {
+  return decodeURIComponent(escape(atob(encoded)));
 }
 
 // Usage
-sha256("Hello World").then(hash => {
-  console.log(hash); // a591a6d40bf420404a011733cfb7b190...
-});</code></pre>
+const encoded = base64Encode("Hello World");
+const decoded = base64Decode(encoded);</pre>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <h3>MD5 Hash</h3>
+      <p>Generate MD5 hash using CryptoJS library.</p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre>// Include CryptoJS first:
+// &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"&gt;&lt;/script&gt;
+
+function md5Hash(text) {
+  return CryptoJS.MD5(text).toString();
+}
+
+// Usage
+const hash = md5Hash("Hello World");
+// Result: b10a8db164e0754105b7a99be72e3fe5</pre>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <h3>SHA-256 Hash</h3>
+      <p>Generate SHA-256 hash using Web Crypto API.</p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre>async function sha256Hash(text) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Usage
+sha256Hash("Hello World").then(hash => console.log(hash));</pre>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <h3>Hex Encode/Decode</h3>
+      <p>Convert text to hexadecimal and back.</p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre>// Hex Encode
+function hexEncode(text) {
+  return Array.from(text)
+    .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
+    .join(' ');
+}
+
+// Hex Decode
+function hexDecode(hex) {
+  return hex.split(' ')
+    .map(h => String.fromCharCode(parseInt(h, 16)))
+    .join('');
+}
+
+// Usage
+const encoded = hexEncode("Hello"); // "48 65 6c 6c 6f"
+const decoded = hexDecode("48 65 6c 6c 6f"); // "Hello"</pre>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <h3>Binary Encode/Decode</h3>
+      <p>Convert text to binary and back.</p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre>// Binary Encode
+function binaryEncode(text) {
+  return Array.from(text)
+    .map(c => c.charCodeAt(0).toString(2).padStart(8, '0'))
+    .join(' ');
+}
+
+// Binary Decode
+function binaryDecode(binary) {
+  return binary.split(' ')
+    .map(b => String.fromCharCode(parseInt(b, 2)))
+    .join('');
+}
+
+// Usage
+const encoded = binaryEncode("Hi"); // "01001000 01101001"
+const decoded = binaryDecode("01001000 01101001"); // "Hi"</pre>
+      </div>
     </div>
   </div>
 
-  <div class="container">
-    <h2>🎨 Embed Widgets</h2>
-    <p>Embed our tools on your website with a simple iframe. Fully responsive and styled.</p>
+  <!-- Embed Widgets Tab -->
+  <div class="content-section" id="embed">
+    <h2>Embed Our Tools</h2>
+    <p style="color:#aaa;font-size:14px;">Add our tools directly to your website using an iframe.</p>
     
-    <div class="embed-section">
-      <h3>Base64 Encoder Widget</h3>
-      <pre><code>&lt;iframe 
-  src="https://www.deadhydra.me/base64.html" 
-  width="100%" 
-  height="600" 
+    <label style="color:#aaa;font-size:14px;">Select Tool:</label>
+    <select id="embedSelector" onchange="updateEmbed()">
+      <option value="base64.html">Base64 Encoder/Decoder</option>
+      <option value="md5.html">MD5 Hash Generator</option>
+      <option value="sha256.html">SHA-256 Hash Generator</option>
+      <option value="sha512.html">SHA-512 Hash Generator</option>
+      <option value="hex.html">Hex Encoder/Decoder</option>
+      <option value="binary.html">Binary Converter</option>
+      <option value="octal.html">Octal Converter</option>
+      <option value="base32.html">Base32 Encoder/Decoder</option>
+      <option value="morse.html">Morse Code Converter</option>
+      <option value="qr-code.html">QR Code Generator</option>
+      <option value="json-formatter.html">JSON Formatter</option>
+      <option value="text-tools.html">Text Tools</option>
+      <option value="text-diff.html">Text Diff Checker</option>
+    </select>
+
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre id="embedCode">&lt;iframe 
+  src="https://www.deadhydra.me/base64.html"
+  width="100%"
+  height="600"
   frameborder="0"
-  style="border-radius: 12px;"&gt;
-&lt;/iframe&gt;</code></pre>
-      <button class="copy-btn" onclick="copyEmbed('base64')">Copy Embed Code</button>
+  style="border-radius: 15px;"
+&gt;&lt;/iframe&gt;</pre>
     </div>
+
+    <h3 style="color:#00bfff;font-size:16px;">Preview</h3>
+    <div class="embed-preview">
+      <iframe id="embedPreview" src="base64.html" width="100%" height="400" frameborder="0" style="border-radius:10px;"></iframe>
+    </div>
+  </div>
+
+  <!-- Examples Tab -->
+  <div class="content-section" id="examples">
+    <h2>Usage Examples</h2>
     
-    <div class="embed-section">
-      <h3>QR Code Generator Widget</h3>
-      <pre><code>&lt;iframe 
-  src="https://www.deadhydra.me/qr-code.html" 
-  width="100%" 
-  height="700" 
-  frameborder="0"
-  style="border-radius: 12px;"&gt;
-&lt;/iframe&gt;</code></pre>
-      <button class="copy-btn" onclick="copyEmbed('qr')">Copy Embed Code</button>
+    <div class="tool-card">
+      <h3>Password Hashing Example</h3>
+      <p>Securely hash passwords before storing.</p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre>// Using SHA-256 for password hashing
+async function hashPassword(password, salt) {
+  const combined = salt + password;
+  return await sha256Hash(combined);
+}
+
+// Generate random salt
+function generateSalt() {
+  const array = new Uint8Array(16);
+  crypto.getRandomValues(array);
+  return Array.from(array, b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Usage
+const salt = generateSalt();
+const hashedPassword = await hashPassword("myPassword123", salt);
+// Store both salt and hashedPassword</pre>
+      </div>
     </div>
-    
-    <div class="embed-section">
-      <h3>Password Generator Widget</h3>
-      <pre><code>&lt;iframe 
-  src="https://www.deadhydra.me/pass.html" 
-  width="100%" 
-  height="650" 
-  frameborder="0"
-  style="border-radius: 12px;"&gt;
-&lt;/iframe&gt;</code></pre>
-      <button class="copy-btn" onclick="copyEmbed('pass')">Copy Embed Code</button>
+
+    <div class="tool-card">
+      <h3>Data Encoding for URLs</h3>
+      <p>Safely encode data for URL parameters.</p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre>// Encode data for URL
+function encodeForUrl(data) {
+  const json = JSON.stringify(data);
+  const base64 = base64Encode(json);
+  return encodeURIComponent(base64);
+}
+
+// Decode from URL
+function decodeFromUrl(encoded) {
+  const base64 = decodeURIComponent(encoded);
+  const json = base64Decode(base64);
+  return JSON.parse(json);
+}
+
+// Usage
+const data = { name: "John", id: 123 };
+const encoded = encodeForUrl(data);
+const url = `https://example.com/api?data=${encoded}`;</pre>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <h3>File Checksum Verification</h3>
+      <p>Verify file integrity using SHA-256.</p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre>async function getFileChecksum(file) {
+  const buffer = await file.arrayBuffer();
+  const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Usage with file input
+document.getElementById('fileInput').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  const checksum = await getFileChecksum(file);
+  console.log('SHA-256:', checksum);
+});</pre>
+      </div>
     </div>
   </div>
 
-  <div class="container">
-    <h2>📚 Available Tools</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Tool</th>
-          <th>URL</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Base64</td>
-          <td><code>/base64.html</code></td>
-          <td>Encode/decode Base64</td>
-        </tr>
-        <tr>
-          <td>Binary</td>
-          <td><code>/binary.html</code></td>
-          <td>Text to binary conversion</td>
-        </tr>
-        <tr>
-          <td>Hex</td>
-          <td><code>/hex.html</code></td>
-          <td>Hexadecimal encoding</td>
-        </tr>
-        <tr>
-          <td>Morse Code</td>
-          <td><code>/morse.html</code></td>
-          <td>Morse code translator</td>
-        </tr>
-        <tr>
-          <td>SHA-256</td>
-          <td><code>/sha256.html</code></td>
-          <td>SHA-256 hash generator</td>
-        </tr>
-        <tr>
-          <td>MD5</td>
-          <td><code>/md5.html</code></td>
-          <td>MD5 hash generator</td>
-        </tr>
-        <tr>
-          <td>Password</td>
-          <td><code>/pass.html</code></td>
-          <td>Secure password generator</td>
-        </tr>
-        <tr>
-          <td>QR Code</td>
-          <td><code>/qr-code.html</code></td>
-          <td>QR code generator</td>
-        </tr>
-        <tr>
-          <td>JSON Formatter</td>
-          <td><code>/json-formatter.html</code></td>
-          <td>Format JSON/XML/YAML</td>
-        </tr>
-        <tr>
-          <td>Text Tools</td>
-          <td><code>/text-tools.html</code></td>
-          <td>Character counter & tools</td>
-        </tr>
-        <tr>
-          <td>Text Diff</td>
-          <td><code>/text-diff.html</code></td>
-          <td>Compare text differences</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <a href="index.html">← Back to Home</a>
 
-  <div class="container">
-    <h2>💡 Usage Tips</h2>
-    <ul style="color: #80cfff; line-height: 1.8;">
-      <li>All tools work offline after initial load (PWA support coming soon)</li>
-      <li>No API keys or authentication required</li>
-      <li>All processing happens in the browser for maximum privacy</li>
-      <li>Embed widgets are responsive and mobile-friendly</li>
-      <li>Free for commercial and personal use</li>
-    </ul>
-  </div>
+  <section class="seo-text" style="max-width:800px;margin:30px auto 10px;padding:16px;text-align:center;color:#9fc8e5;font-size:14px;line-height:1.6;">
+    <h2 style="color:#00bfff;font-size:18px;margin-bottom:10px;">Developer API & Embed Documentation</h2>
+    <p>Integrate The Hydra's encoding and hashing tools into your own website or application. Copy-paste ready JavaScript code for Base64, MD5, SHA-256, Hex, Binary conversions and more. Embed our tools directly using iframe widgets. All code is free to use and processes data client-side for privacy.</p>
+  </section>
 
-  <div class="footer">
-    <a href="index.html">Home</a> | 
-    <a href="about.html">About</a> | 
-    <a href="contact.html">Contact</a> | 
-    <a href="privacy-policy.html">Privacy</a> | 
-    <a href="terms.html">Terms</a>
-  </div>
+  <footer class="site-footer" style="text-align:center; margin-top:10px; color:#7fa6c4; font-size:13px;">
+    <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+      <a style="color:#66d4ff;" href="about.html">About</a>
+      <span style="color:#4b6b8a;">|</span>
+      <a style="color:#66d4ff;" href="contact.html">Contact</a>
+      <span style="color:#4b6b8a;">|</span>
+      <a style="color:#66d4ff;" href="privacy-policy.html">Privacy</a>
+      <span style="color:#4b6b8a;">|</span>
+      <a style="color:#66d4ff;" href="terms.html">Terms</a>
+    </div>
+  </footer>
 
   <script>
-    function copyEmbed(type) {
-      const embedCodes = {
-        'base64': '<iframe src="https://www.deadhydra.me/base64.html" width="100%" height="600" frameborder="0" style="border-radius: 12px;"></iframe>',
-        'qr': '<iframe src="https://www.deadhydra.me/qr-code.html" width="100%" height="700" frameborder="0" style="border-radius: 12px;"></iframe>',
-        'pass': '<iframe src="https://www.deadhydra.me/pass.html" width="100%" height="650" frameborder="0" style="border-radius: 12px;"></iframe>'
-      };
-      
-      const textarea = document.createElement('textarea');
-      textarea.value = embedCodes[type];
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
-      
-      event.target.textContent = 'Copied!';
-      setTimeout(() => {
-        event.target.textContent = 'Copy Embed Code';
-      }, 2000);
+    function showTab(tabId) {
+      document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
     }
+    
+    function updateEmbed() {
+      const tool = document.getElementById('embedSelector').value;
+      const embedCode = `<iframe 
+  src="https://www.deadhydra.me/${tool}"
+  width="100%"
+  height="600"
+  frameborder="0"
+  style="border-radius: 15px;"
+></iframe>`;
+      document.getElementById('embedCode').textContent = embedCode;
+      document.getElementById('embedPreview').src = tool;
+    }
+    
+    function copyCode(btn) {
+      const pre = btn.parentElement.querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    }
+
+    // Starfield
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    let mouse = { x: canvas.width/2, y: canvas.height/2 };
+    window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+    
+    const stars = [];
+    for (let i = 0; i < 120; i++) {
+      stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 1.5 + 0.5, vx: Math.random() * 0.2 - 0.1, vy: Math.random() * 0.1 + 0.1 });
+    }
+    
+    function updateStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(star => {
+        const dx = mouse.x - star.x, dy = mouse.y - star.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < 100) { star.vx = -dx * 0.01 * (100 - distance) / 100; star.vy = -dy * 0.01 * (100 - distance) / 100; }
+        star.x += star.vx; star.y += star.vy;
+        if (star.x < 0 || star.x > canvas.width || star.y > canvas.height) { star.x = Math.random() * canvas.width; star.y = -10; star.vx = Math.random() * 0.2 - 0.1; star.vy = Math.random() * 0.1 + 0.1; }
+        ctx.beginPath(); ctx.shadowColor = "rgba(0, 191, 255, 0.7)"; ctx.shadowBlur = 8; ctx.fillStyle = "#00ffff"; ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2); ctx.fill();
+      });
+      requestAnimationFrame(updateStars);
+    }
+    updateStars();
   </script>
 </body>
 </html>

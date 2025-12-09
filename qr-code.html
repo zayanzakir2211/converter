@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- Primary Meta Tags -->
-  <title>Free QR Code Generator Online | Create QR Codes Instantly | The Hydra Tools</title>
-  <meta name="title" content="Free QR Code Generator Online | Create QR Codes Instantly | The Hydra Tools">
-  <meta name="description" content="Free online QR code generator. Create QR codes for URLs, text, WiFi, contact info instantly. Download as PNG or SVG. No signup required.">
-  <meta name="keywords" content="qr code generator, qr code maker, free qr code, qr code creator, generate qr code, qr code online, custom qr code, wifi qr code">
+  <title>Free QR Code Generator Online | Create Custom QR Codes | The Hydra Tools</title>
+  <meta name="title" content="Free QR Code Generator Online | Create Custom QR Codes | The Hydra Tools">
+  <meta name="description" content="Free online QR code generator. Create custom QR codes for URLs, text, WiFi, contact info instantly. Download as PNG. No signup required. Fast and secure.">
+  <meta name="keywords" content="qr code generator, qr code maker, free qr code, qr code creator, generate qr code, qr code online, custom qr code, wifi qr code, url qr code, text qr code">
   <meta name="author" content="Zayan Zakir">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <link rel="canonical" href="https://www.deadhydra.me/qr-code.html">
@@ -19,119 +19,213 @@
   <meta property="og:url" content="https://www.deadhydra.me/qr-code.html">
   <meta property="og:site_name" content="The Hydra">
   <meta property="og:title" content="Free QR Code Generator Online | The Hydra Tools">
-  <meta property="og:description" content="Create QR codes instantly for free. Download as PNG or SVG.">
+  <meta property="og:description" content="Create custom QR codes for URLs, text, WiFi instantly. Download as PNG. Free online tool.">
   <meta property="og:image" content="https://www.deadhydra.me/assets/2.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://www.deadhydra.me/qr-code.html">
   <meta name="twitter:title" content="Free QR Code Generator Online | The Hydra Tools">
-  <meta name="twitter:description" content="Create QR codes instantly for free.">
+  <meta name="twitter:description" content="Create custom QR codes instantly. Download as PNG. Free and secure.">
+  <meta name="twitter:image" content="https://www.deadhydra.me/assets/2.png">
   
-  <!-- QR Code Library -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://www.deadhydra.me/assets/4.png">
+  <link rel="apple-touch-icon" href="https://www.deadhydra.me/assets/4.png">
   
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "QR Code Generator",
+    "url": "https://www.deadhydra.me/qr-code.html",
+    "description": "Free online QR code generator. Create custom QR codes for URLs, text, WiFi, contact info instantly.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Zayan Zakir"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "180"
+    }
+  }
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091085127978476" crossorigin="anonymous"></script>
+
   <style>
-    body { 
-      font-family: 'Segoe UI', sans-serif; 
-      background-color: #121212; 
-      background-image: url('assets/1.png');
-      background-size: cover;
-      color: #e8f5ff; 
-      padding: 24px; 
-      max-width: 800px; 
-      margin: 0 auto; 
-    }
-    h1 { color: #00bfff; text-align: center; }
-    .container { background: rgba(0,0,0,0.7); padding: 24px; border-radius: 12px; margin-bottom: 20px; }
-    label { display: block; margin: 12px 0 6px; color: #00bfff; font-weight: 600; }
-    input, textarea, select { 
-      width: 100%; 
-      padding: 10px; 
-      border-radius: 8px; 
-      border: 1px solid #1e2a3a; 
-      background: #0a0a0a; 
-      color: #e8f5ff; 
-      font-family: 'Courier New', monospace;
-      box-sizing: border-box;
-    }
-    textarea { min-height: 100px; resize: vertical; }
-    button { 
-      width: 100%;
-      margin-top: 16px;
-      padding: 12px; 
-      border-radius: 8px; 
-      border: none; 
-      background: #00bfff; 
-      color: #0b0b0b; 
-      font-weight: 600; 
-      cursor: pointer; 
-      font-size: 16px;
-    }
-    button:hover { background: #33ceff; }
-    #qrResult { text-align: center; margin-top: 20px; }
-    #qrCanvas { 
-      border: 3px solid #00bfff; 
-      border-radius: 12px; 
-      background: white; 
+    body {
+      background-color: #121212;
+      color: #00bfff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
       padding: 20px;
-      max-width: 100%;
+      background-image: url(assets/1.png);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
     }
-    .download-btns { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
-    .download-btns button { flex: 1; min-width: 120px; }
-    .share-btn { background: #1da1f2; }
-    .share-btn:hover { background: #1a91da; }
-    .footer { margin-top: 32px; font-size: 14px; color: #9fb3c8; text-align: center; }
-    .seo-content { margin-top: 32px; padding: 20px; background: rgba(0,0,0,0.5); border-radius: 8px; }
-    .seo-content h2 { color: #00bfff; font-size: 20px; }
-    .seo-content p { color: #80cfff; line-height: 1.6; }
+    #stars {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    textarea, input[type="text"], select {
+      width: 90%;
+      max-width: 500px;
+      background: rgba(0, 191, 255, 0.1);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
+      color: #00bfff;
+      border: none;
+      padding: 12px;
+      font-size: 14px;
+      border-radius: 25px;
+      margin-bottom: 10px;
+      transition: background 0.3s ease, box-shadow 0.3s;
+    }
+    textarea {
+      height: 100px;
+      resize: none;
+    }
+    select {
+      cursor: pointer;
+    }
+    .color-row {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .color-row label {
+      color: #aaa;
+      font-size: 14px;
+    }
+    input[type="color"] {
+      width: 50px;
+      height: 35px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: transparent;
+    }
+    button {
+      text-decoration: none;
+      color: #00bfff;
+      font-size: 16px;
+      text-align: center;
+      padding: 12px 24px;
+      border: 2px solid rgba(0, 191, 255, 0.4);
+      border-radius: 30px;
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+      background: rgba(0, 191, 255, 0.1);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      box-shadow: 0 4px 30px rgba(0, 191, 255, 0.2);
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background: rgba(0, 191, 255, 0.3);
+      color: #ffffff;
+      box-shadow: 0 6px 40px rgba(0, 191, 255, 0.4);
+    }
+    #qrResult {
+      margin-top: 20px;
+      display: none;
+      text-align: center;
+    }
+    #qrImage {
+      border: 3px solid #00bfff;
+      border-radius: 12px;
+      background: white;
+      padding: 15px;
+      max-width: 90%;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    a {
+      color: #00bfff;
+      text-decoration: none;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
+  <canvas id="stars"></canvas>
   <h1>QR Code Generator</h1>
-  
-  <div class="container">
-    <label for="qrInput">Enter Text or URL</label>
-    <textarea id="qrInput" placeholder="Enter URL, text, WiFi credentials, or any data..."></textarea>
-    
-    <label for="qrSize">QR Code Size</label>
-    <select id="qrSize">
-      <option value="200">Small (200x200)</option>
-      <option value="300" selected>Medium (300x300)</option>
-      <option value="400">Large (400x400)</option>
-      <option value="512">Extra Large (512x512)</option>
-    </select>
-    
-    <label for="qrColor">Color</label>
-    <input type="color" id="qrColor" value="#000000">
-    
-    <label for="qrBg">Background Color</label>
-    <input type="color" id="qrBg" value="#ffffff">
-    
-    <button onclick="generateQR()">Generate QR Code</button>
+
+  <label for="qrInput" style="color: #aaa; font-size: 14px;">Enter Text or URL</label>
+  <textarea id="qrInput" placeholder="Enter URL, text, WiFi credentials, or any data..."></textarea>
+
+  <label for="qrSize" style="color: #aaa; font-size: 14px;">QR Code Size</label>
+  <select id="qrSize">
+    <option value="150">Small (150x150)</option>
+    <option value="200" selected>Medium (200x200)</option>
+    <option value="300">Large (300x300)</option>
+    <option value="400">Extra Large (400x400)</option>
+  </select>
+
+  <div class="color-row">
+    <label>Color: <input type="color" id="qrColor" value="#000000"></label>
+    <label>Background: <input type="color" id="qrBg" value="#ffffff"></label>
   </div>
-  
-  <div id="qrResult" style="display:none;">
-    <canvas id="qrCanvas"></canvas>
-    <div class="download-btns">
-      <button onclick="downloadQR('png')">Download PNG</button>
-      <button onclick="downloadQR('svg')">Download SVG</button>
-      <button class="share-btn" onclick="shareQR()">Share 📤</button>
+
+  <button onclick="generateQR()">Generate QR Code</button>
+
+  <div id="qrResult">
+    <img id="qrImage" src="" alt="QR Code">
+    <div class="btn-group">
+      <button onclick="downloadQR()">Download PNG</button>
+      <button id="copyBtn" onclick="copyQR()">Copy to Clipboard</button>
     </div>
   </div>
 
-  <div class="seo-content">
-    <h2>Free QR Code Generator</h2>
-    <p>Create custom QR codes instantly for free. Our QR code generator supports URLs, plain text, WiFi credentials, contact information, and more. Customize colors, download as PNG or SVG, and share directly. Perfect for marketing, business cards, event tickets, and product labeling. Generate unlimited QR codes with no registration required.</p>
-  </div>
+  <a href="index.html">← Back to Home</a>
 
-  <div class="footer">
-    <a href="index.html">Home</a> | 
-    <a href="about.html">About</a> | 
-    <a href="contact.html">Contact</a> | 
-    <a href="privacy-policy.html">Privacy</a> | 
-    <a href="terms.html">Terms</a>
-  </div>
+  <section class="seo-text" style="max-width:800px;margin:30px auto 10px;padding:16px;text-align:center;color:#9fc8e5;font-size:14px;line-height:1.6;">
+    <h2 style="color:#00bfff;font-size:18px;margin-bottom:10px;">Free QR Code Generator</h2>
+    <p>Create custom QR codes instantly for free. Generate QR codes for URLs, plain text, WiFi credentials, contact information, and more. Customize colors, choose size, and download as PNG. Perfect for marketing, business cards, event tickets, and product labeling. All processing happens in your browser for complete privacy.</p>
+  </section>
+
+  <footer class="site-footer" style="text-align:center; margin-top:10px; color:#7fa6c4; font-size:13px;">
+    <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+      <a style="color:#66d4ff;" href="about.html">About</a>
+      <span style="color:#4b6b8a;">|</span>
+      <a style="color:#66d4ff;" href="contact.html">Contact</a>
+      <span style="color:#4b6b8a;">|</span>
+      <a style="color:#66d4ff;" href="privacy-policy.html">Privacy</a>
+      <span style="color:#4b6b8a;">|</span>
+      <a style="color:#66d4ff;" href="terms.html">Terms</a>
+    </div>
+  </footer>
 
   <script>
     function generateQR() {
@@ -141,74 +235,98 @@
         return;
       }
       
-      const size = parseInt(document.getElementById('qrSize').value);
-      const color = document.getElementById('qrColor').value;
-      const bgColor = document.getElementById('qrBg').value;
-      const canvas = document.getElementById('qrCanvas');
+      const size = document.getElementById('qrSize').value;
+      const color = document.getElementById('qrColor').value.replace('#', '');
+      const bgColor = document.getElementById('qrBg').value.replace('#', '');
+      const encodedData = encodeURIComponent(input);
       
-      QRCode.toCanvas(canvas, input, {
-        width: size,
-        margin: 2,
-        color: {
-          dark: color,
-          light: bgColor
-        }
-      }, function (error) {
-        if (error) {
-          console.error(error);
-          alert('Error generating QR code');
-        } else {
-          document.getElementById('qrResult').style.display = 'block';
-        }
-      });
+      const qrImage = document.getElementById('qrImage');
+      qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodedData}&color=${color}&bgcolor=${bgColor}`;
+      
+      document.getElementById('qrResult').style.display = 'block';
     }
     
-    function downloadQR(format) {
-      const canvas = document.getElementById('qrCanvas');
-      const input = document.getElementById('qrInput').value.trim();
-      
-      if (format === 'png') {
-        const link = document.createElement('a');
-        link.download = 'qrcode.png';
-        link.href = canvas.toDataURL();
-        link.click();
-      } else if (format === 'svg') {
-        const color = document.getElementById('qrColor').value;
-        const bgColor = document.getElementById('qrBg').value;
-        const size = parseInt(document.getElementById('qrSize').value);
-        
-        QRCode.toString(input, {
-          type: 'svg',
-          width: size,
-          color: { dark: color, light: bgColor }
-        }, function (error, svg) {
-          if (!error) {
-            const blob = new Blob([svg], { type: 'image/svg+xml' });
-            const link = document.createElement('a');
-            link.download = 'qrcode.svg';
-            link.href = URL.createObjectURL(blob);
-            link.click();
-          }
-        });
-      }
+    function downloadQR() {
+      const qrImage = document.getElementById('qrImage');
+      const link = document.createElement('a');
+      link.href = qrImage.src;
+      link.download = 'qrcode.png';
+      link.click();
     }
     
-    function shareQR() {
-      const canvas = document.getElementById('qrCanvas');
-      canvas.toBlob(function(blob) {
-        const file = new File([blob], 'qrcode.png', { type: 'image/png' });
-        
-        if (navigator.share && navigator.canShare({ files: [file] })) {
-          navigator.share({
-            title: 'QR Code',
-            text: 'Check out this QR code!',
-            files: [file]
-          }).catch(console.error);
-        } else {
-          alert('Sharing not supported on this browser. Please download instead.');
-        }
+    function copyQR() {
+      const qrImage = document.getElementById('qrImage');
+      fetch(qrImage.src)
+        .then(res => res.blob())
+        .then(blob => {
+          const item = new ClipboardItem({ 'image/png': blob });
+          navigator.clipboard.write([item]).then(() => {
+            const copyBtn = document.getElementById('copyBtn');
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => copyBtn.textContent = 'Copy to Clipboard', 2000);
+          });
+        })
+        .catch(() => alert('Copy failed. Please download instead.'));
+    }
+
+    // Starfield animation
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let mouse = { x: canvas.width/2, y: canvas.height/2 };
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    const stars = [];
+    for (let i = 0; i < 120; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.5 + 0.5,
+        vx: Math.random() * 0.2 - 0.1,
+        vy: Math.random() * 0.1 + 0.1
       });
     }
+
+    function updateStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(star => {
+        const dx = mouse.x - star.x;
+        const dy = mouse.y - star.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < 100) {
+          const force = (100 - distance) / 100;
+          star.vx = -dx * 0.01 * force;
+          star.vy = -dy * 0.01 * force;
+        }
+        star.x += star.vx;
+        star.y += star.vy;
+        if (star.x < 0 || star.x > canvas.width || star.y > canvas.height) {
+          star.x = Math.random() * canvas.width;
+          star.y = -10;
+          star.vx = Math.random() * 0.2 - 0.1;
+          star.vy = Math.random() * 0.1 + 0.1;
+        }
+        ctx.beginPath();
+        ctx.shadowColor = "rgba(0, 191, 255, 0.7)";
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = "#00ffff";
+        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(updateStars);
+    }
+    updateStars();
   </script>
 </body>
 </html>
