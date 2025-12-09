@@ -273,6 +273,115 @@
       height: 100%;
       z-index: -1;
     }
+
+    /* Cookie Banner Styles */
+    #cookieBanner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #e8f5ff;
+      padding: 20px;
+      box-shadow: 0 -4px 20px rgba(0, 191, 255, 0.3);
+      border-top: 2px solid #00bfff;
+      z-index: 10000;
+      display: none;
+      animation: slideUp 0.4s ease-out;
+    }
+
+    #cookieBanner.show {
+      display: block;
+    }
+
+    .cookie-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .cookie-text {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .cookie-text p {
+      margin: 0 0 8px 0;
+      font-size: 14px;
+      color: #e8f5ff;
+      text-align: left;
+    }
+
+    .cookie-text a {
+      color: #00bfff;
+      text-decoration: underline;
+    }
+
+    .cookie-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .cookie-btn {
+      padding: 10px 24px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+
+    .cookie-btn.accept {
+      background: #00bfff;
+      color: #0b0b0b;
+    }
+
+    .cookie-btn.accept:hover {
+      background: #33ceff;
+      box-shadow: 0 4px 12px rgba(0, 191, 255, 0.4);
+    }
+
+    .cookie-btn.decline {
+      background: transparent;
+      color: #00bfff;
+      border: 2px solid #00bfff;
+    }
+
+    .cookie-btn.decline:hover {
+      background: rgba(0, 191, 255, 0.1);
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .cookie-content {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .cookie-buttons {
+        justify-content: center;
+      }
+      
+      .cookie-text p {
+        text-align: center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -281,6 +390,20 @@
 
   <div id="loader-wrapper">
     <div class="spinner"></div>
+  </div>
+
+  <!-- Cookie Consent Banner -->
+  <div id="cookieBanner">
+    <div class="cookie-content">
+      <div class="cookie-text">
+        <p><strong>🍪 We use cookies</strong></p>
+        <p>This site uses cookies for Google AdSense, Analytics, and reCAPTCHA to improve your experience and protect against spam. By continuing, you accept our <a href="privacy-policy.html">Privacy Policy</a> and <a href="terms.html">Terms</a>.</p>
+      </div>
+      <div class="cookie-buttons">
+        <button class="cookie-btn accept" onclick="acceptCookies()">Accept All</button>
+        <button class="cookie-btn decline" onclick="declineCookies()">Decline</button>
+      </div>
+    </div>
   </div>
 
   <h1>The Hydra Encoding-Decoding Toolbox</h1>
@@ -419,6 +542,45 @@
     }
 
     updateStars(); // Start animation
+
+    // Cookie Consent Functions
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+      return null;
+    }
+
+    function setCookie(name, value, days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      const expires = `expires=${date.toUTCString()}`;
+      document.cookie = `${name}=${value};${expires};path=/;SameSite=Lax`;
+    }
+
+    function acceptCookies() {
+      setCookie('cookieConsent', 'accepted', 365);
+      document.getElementById('cookieBanner').classList.remove('show');
+      // Enable analytics/ads here if needed
+      console.log('Cookies accepted');
+    }
+
+    function declineCookies() {
+      setCookie('cookieConsent', 'declined', 365);
+      document.getElementById('cookieBanner').classList.remove('show');
+      console.log('Cookies declined');
+    }
+
+    // Check if user has already made a choice
+    window.addEventListener('load', function() {
+      const consent = getCookie('cookieConsent');
+      if (!consent) {
+        // No consent recorded, show banner after 1 second
+        setTimeout(function() {
+          document.getElementById('cookieBanner').classList.add('show');
+        }, 1000);
+      }
+    });
 </script>
 
 </body>
