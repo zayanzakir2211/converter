@@ -229,7 +229,10 @@ function base64Decode(encoded) {
 
 // Usage
 const encoded = base64Encode("Hello World");
-const decoded = base64Decode(encoded);</pre>
+console.log(encoded); // Output: "SGVsbG8gV29ybGQ="
+
+const decoded = base64Decode(encoded);
+console.log(decoded); // Output: "Hello World"</pre>
       </div>
     </div>
 
@@ -247,7 +250,7 @@ function md5Hash(text) {
 
 // Usage
 const hash = md5Hash("Hello World");
-// Result: b10a8db164e0754105b7a99be72e3fe5</pre>
+console.log(hash); // Output: "b10a8db164e0754105b7a99be72e3fe5"</pre>
       </div>
     </div>
 
@@ -261,11 +264,14 @@ const hash = md5Hash("Hello World");
   const data = encoder.encode(text);
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashArray.map(b =&gt; b.toString(16).padStart(2, '0')).join('');
 }
 
 // Usage
-sha256Hash("Hello World").then(hash => console.log(hash));</pre>
+sha256Hash("Hello World").then(hash =&gt; {
+  console.log(hash);
+  // Output: "a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e"
+});</pre>
       </div>
     </div>
 
@@ -277,20 +283,23 @@ sha256Hash("Hello World").then(hash => console.log(hash));</pre>
         <pre>// Hex Encode
 function hexEncode(text) {
   return Array.from(text)
-    .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
+    .map(c =&gt; c.charCodeAt(0).toString(16).padStart(2, '0'))
     .join(' ');
 }
 
 // Hex Decode
 function hexDecode(hex) {
   return hex.split(' ')
-    .map(h => String.fromCharCode(parseInt(h, 16)))
+    .map(h =&gt; String.fromCharCode(parseInt(h, 16)))
     .join('');
 }
 
 // Usage
-const encoded = hexEncode("Hello"); // "48 65 6c 6c 6f"
-const decoded = hexDecode("48 65 6c 6c 6f"); // "Hello"</pre>
+const encoded = hexEncode("Hello");
+console.log(encoded); // Output: "48 65 6c 6c 6f"
+
+const decoded = hexDecode("48 65 6c 6c 6f");
+console.log(decoded); // Output: "Hello"</pre>
       </div>
     </div>
 
@@ -302,20 +311,23 @@ const decoded = hexDecode("48 65 6c 6c 6f"); // "Hello"</pre>
         <pre>// Binary Encode
 function binaryEncode(text) {
   return Array.from(text)
-    .map(c => c.charCodeAt(0).toString(2).padStart(8, '0'))
+    .map(c =&gt; c.charCodeAt(0).toString(2).padStart(8, '0'))
     .join(' ');
 }
 
 // Binary Decode
 function binaryDecode(binary) {
   return binary.split(' ')
-    .map(b => String.fromCharCode(parseInt(b, 2)))
+    .map(b =&gt; String.fromCharCode(parseInt(b, 2)))
     .join('');
 }
 
 // Usage
-const encoded = binaryEncode("Hi"); // "01001000 01101001"
-const decoded = binaryDecode("01001000 01101001"); // "Hi"</pre>
+const encoded = binaryEncode("Hi");
+console.log(encoded); // Output: "01001000 01101001"
+
+const decoded = binaryDecode("01001000 01101001");
+console.log(decoded); // Output: "Hi"</pre>
       </div>
     </div>
   </div>
@@ -378,13 +390,19 @@ async function hashPassword(password, salt) {
 function generateSalt() {
   const array = new Uint8Array(16);
   crypto.getRandomValues(array);
-  return Array.from(array, b => b.toString(16).padStart(2, '0')).join('');
+  return Array.from(array, b =&gt; b.toString(16).padStart(2, '0')).join('');
 }
 
 // Usage
 const salt = generateSalt();
+console.log('Salt:', salt); 
+// Output: "a1b2c3d4e5f6..." (32 random hex chars)
+
 const hashedPassword = await hashPassword("myPassword123", salt);
-// Store both salt and hashedPassword</pre>
+console.log('Hash:', hashedPassword);
+// Output: "7f83b1657ff1fc..." (64 hex chars)
+
+// Store both salt and hashedPassword in your database</pre>
       </div>
     </div>
 
@@ -410,7 +428,16 @@ function decodeFromUrl(encoded) {
 // Usage
 const data = { name: "John", id: 123 };
 const encoded = encodeForUrl(data);
-const url = `https://example.com/api?data=${encoded}`;</pre>
+console.log(encoded);
+// Output: "eyJuYW1lIjoiSm9obiIsImlkIjoxMjN9"
+
+const url = `https://example.com/api?data=${encoded}`;
+console.log(url);
+// Output: "https://example.com/api?data=eyJuYW1lIjoiSm9obiIsImlkIjoxMjN9"
+
+const decoded = decodeFromUrl(encoded);
+console.log(decoded);
+// Output: { name: "John", id: 123 }</pre>
       </div>
     </div>
 
@@ -423,14 +450,18 @@ const url = `https://example.com/api?data=${encoded}`;</pre>
   const buffer = await file.arrayBuffer();
   const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashArray.map(b =&gt; b.toString(16).padStart(2, '0')).join('');
 }
 
 // Usage with file input
-document.getElementById('fileInput').addEventListener('change', async (e) => {
+document.getElementById('fileInput').addEventListener('change', async (e) =&gt; {
   const file = e.target.files[0];
+  console.log('File:', file.name);
+  // Output: "document.pdf"
+  
   const checksum = await getFileChecksum(file);
   console.log('SHA-256:', checksum);
+  // Output: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 });</pre>
       </div>
     </div>
